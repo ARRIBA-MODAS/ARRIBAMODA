@@ -5,12 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARRIBA MODA</title>
 
-<style>
-body {margin:0;font-family:'Helvetica Neue', Arial;background:#fafafa;color:#111;}
+<!-- FUENTE PREMIUM -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
+<style>
+body {
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#fafafa;
+  color:#111;
+}
+
+/* HEADER */
 header {
   display:flex;
   justify-content:space-between;
+  align-items:center;
   padding:20px 40px;
   background:white;
   position:sticky;
@@ -18,18 +28,27 @@ header {
 }
 
 .logo {letter-spacing:4px;}
+
+nav a {
+  margin:0 10px;
+  text-decoration:none;
+  color:#111;
+  font-size:14px;
+}
+
 .cart {cursor:pointer;}
 
+/* BANNER */
 .banner {
-  height:70vh;
+  height:60vh;
   display:flex;
   align-items:center;
   justify-content:center;
   background:#eae7e1;
-  font-size:50px;
-  letter-spacing:5px;
+  font-size:40px;
 }
 
+/* SECCIONES */
 .section {padding:60px 20px;}
 .section h2 {text-align:center;margin-bottom:40px;font-weight:300;}
 
@@ -41,39 +60,33 @@ header {
   margin:auto;
 }
 
+/* CARD */
 .card {
   background:white;
-  padding:30px;
+  padding:20px;
   text-align:center;
   transition:0.3s;
 }
 
-.card:hover {transform:translateY(-10px);}
+.card:hover {transform:translateY(-8px);}
+
+select, input {
+  width:100%;
+  padding:8px;
+  margin:5px 0;
+  border:1px solid #ddd;
+}
 
 button {
   margin-top:10px;
-  padding:10px 25px;
+  padding:10px;
   border:none;
   background:black;
   color:white;
   cursor:pointer;
 }
 
-/* FOOTER */
-footer {
-  background:white;
-  padding:40px;
-  text-align:center;
-  margin-top:60px;
-}
-
-iframe {
-  width:100%;
-  height:250px;
-  border:none;
-  border-radius:10px;
-}
-
+/* RESPONSIVE */
 @media(max-width:768px){
   .grid {grid-template-columns:1fr;}
 }
@@ -84,44 +97,124 @@ iframe {
 
 <header>
   <div class="logo">ARRIBA MODA</div>
+
+  <nav>
+    <a href="#novedades">Novedades</a>
+    <a href="#vendidos">Más vendidos</a>
+  </nav>
+
   <div class="cart" onclick="irCarrito()">🛒 (<span id="count">0</span>)</div>
 </header>
 
 <div class="banner">Own Your Style</div>
 
 <!-- NOVEDADES -->
-<div class="section">
+<div class="section" id="novedades">
 <h2>NOVEDADES</h2>
+
 <div class="grid">
 
-<div class="card"><h3>Vestido Arena</h3><p>$15000</p><button onclick="add('Vestido Arena',15000)">Agregar</button></div>
-<div class="card"><h3>Top Blanco</h3><p>$9000</p><button onclick="add('Top Blanco',9000)">Agregar</button></div>
-<div class="card"><h3>Blazer Nude</h3><p>$25000</p><button onclick="add('Blazer Nude',25000)">Agregar</button></div>
+<div class="card">
+  <h3>Vestido Arena</h3>
+  <p>$15000</p>
+
+  <select id="color1">
+    <option>Negro</option>
+    <option>Blanco</option>
+    <option>Gris</option>
+  </select>
+
+  <input type="number" id="cant1" min="1" max="5" value="1">
+
+  <button onclick="add('Vestido Arena',15000,'color1','cant1')">Agregar</button>
+</div>
+
+<div class="card">
+  <h3>Top Blanco</h3>
+  <p>$9000</p>
+
+  <select id="color2">
+    <option>Negro</option>
+    <option>Blanco</option>
+    <option>Gris</option>
+  </select>
+
+  <input type="number" id="cant2" min="1" max="5" value="1">
+
+  <button onclick="add('Top Blanco',9000,'color2','cant2')">Agregar</button>
+</div>
+
+<div class="card">
+  <h3>Blazer Nude</h3>
+  <p>$25000</p>
+
+  <select id="color3">
+    <option>Negro</option>
+    <option>Blanco</option>
+    <option>Gris</option>
+  </select>
+
+  <input type="number" id="cant3" min="1" max="5" value="1">
+
+  <button onclick="add('Blazer Nude',25000,'color3','cant3')">Agregar</button>
+</div>
 
 </div>
 </div>
 
 <!-- MÁS VENDIDOS -->
-<div class="section">
+<div class="section" id="vendidos">
 <h2>MÁS VENDIDOS</h2>
+
 <div class="grid">
 
-<div class="card"><h3>Vestido Negro</h3><p>$17000</p><button onclick="add('Vestido Negro',17000)">Agregar</button></div>
-<div class="card"><h3>Pantalón Sastrero</h3><p>$18000</p><button onclick="add('Pantalón Sastrero',18000)">Agregar</button></div>
-<div class="card"><h3>Conjunto Beige</h3><p>$20000</p><button onclick="add('Conjunto Beige',20000)">Agregar</button></div>
+<div class="card">
+  <h3>Vestido Negro</h3>
+  <p>$17000</p>
+
+  <select id="color4">
+    <option>Negro</option>
+    <option>Blanco</option>
+    <option>Gris</option>
+  </select>
+
+  <input type="number" id="cant4" min="1" max="5" value="1">
+
+  <button onclick="add('Vestido Negro',17000,'color4','cant4')">Agregar</button>
+</div>
+
+<div class="card">
+  <h3>Pantalón Sastrero</h3>
+  <p>$18000</p>
+
+  <select id="color5">
+    <option>Negro</option>
+    <option>Blanco</option>
+    <option>Gris</option>
+  </select>
+
+  <input type="number" id="cant5" min="1" max="5" value="1">
+
+  <button onclick="add('Pantalón Sastrero',18000,'color5','cant5')">Agregar</button>
+</div>
+
+<div class="card">
+  <h3>Conjunto Beige</h3>
+  <p>$20000</p>
+
+  <select id="color6">
+    <option>Negro</option>
+    <option>Blanco</option>
+    <option>Gris</option>
+  </select>
+
+  <input type="number" id="cant6" min="1" max="5" value="1">
+
+  <button onclick="add('Conjunto Beige',20000,'color6','cant6')">Agregar</button>
+</div>
 
 </div>
 </div>
-
-<!-- FOOTER -->
-<footer>
-<h3>Visitános</h3>
-<p>Concordia 525</p>
-
-<iframe src="https://www.google.com/maps?q=Concordia+525&output=embed"></iframe>
-
-<p style="margin-top:20px;">© 2026 ARRIBA MODA</p>
-</footer>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -130,8 +223,11 @@ function updateCount(){
   document.getElementById("count").innerText = cart.length;
 }
 
-function add(nombre, precio){
-  cart.push({nombre, precio});
+function add(nombre, precio, colorId, cantId){
+  let color = document.getElementById(colorId).value;
+  let cantidad = parseInt(document.getElementById(cantId).value);
+
+  cart.push({nombre, precio, color, cantidad});
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCount();
 }
