@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Carrito</title>
+
+<style>
+body {
+  font-family:'Helvetica Neue', Arial;
+  max-width:700px;
+  margin:auto;
+  padding:40px;
+}
+
+h1 {
+  font-weight:300;
+}
+
+.item {
+  display:flex;
+  justify-content:space-between;
+  margin:15px 0;
+}
+
+.remove {
+  cursor:pointer;
+  color:#999;
+}
+
+button {
+  width:100%;
+  padding:15px;
+  background:black;
+  color:white;
+  border:none;
+  margin-top:30px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Tu carrito</h1>
+
+<div id="lista"></div>
+
+<h2>Total: $<span id="total">0</span></h2>
+
+<button onclick="comprar()">Finalizar compra</button>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function render(){
+  let lista = document.getElementById("lista");
+  let total = 0;
+  lista.innerHTML = "";
+
+  cart.forEach((item, i) => {
+    lista.innerHTML += `
+      <div class="item">
+        <span>${item.nombre}</span>
+        <span>$${item.precio}</span>
+        <span class="remove" onclick="removeItem(${i})">x</span>
+      </div>
+    `;
+    total += item.precio;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  render();
+}
+
+function comprar(){
+  let mensaje = "Hola quiero comprar:%0A";
+
+  cart.forEach(item => {
+    mensaje += `- ${item.nombre}%0A`;
+  });
+
+  let total = cart.reduce((sum,i)=>sum+i.precio,0);
+  mensaje += `%0ATotal: $${total}`;
+
+  let numero = "TU_NUMERO";
+  window.open(`https://wa.me/${numero}?text=${mensaje}`);
+}
+
+render();
+</script>
+
+</body>
+</html>
