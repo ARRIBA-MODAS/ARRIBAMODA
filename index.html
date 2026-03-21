@@ -6,14 +6,8 @@
 <title>ARRIBA MODA</title>
 
 <style>
-body {
-  margin:0;
-  font-family:'Helvetica Neue', Arial;
-  background:#fafafa;
-  color:#111;
-}
+body {margin:0;font-family:'Helvetica Neue', Arial;background:#fafafa;color:#111;}
 
-/* HEADER */
 header {
   display:flex;
   justify-content:space-between;
@@ -23,16 +17,9 @@ header {
   top:0;
 }
 
-.logo {
-  letter-spacing:4px;
-  font-weight:300;
-}
+.logo {letter-spacing:4px;}
+.cart {cursor:pointer;}
 
-.cart {
-  cursor:pointer;
-}
-
-/* BANNER */
 .banner {
   height:70vh;
   display:flex;
@@ -40,31 +27,28 @@ header {
   justify-content:center;
   background:#eae7e1;
   font-size:50px;
-  font-weight:300;
   letter-spacing:5px;
-  animation:fade 1.5s;
 }
 
-/* GRID */
+.section {padding:60px 20px;}
+.section h2 {text-align:center;margin-bottom:40px;font-weight:300;}
+
 .grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:30px;
   max-width:1100px;
-  margin:80px auto;
-  padding:0 20px;
+  margin:auto;
 }
 
 .card {
   background:white;
   padding:30px;
   text-align:center;
-  transition:0.4s;
+  transition:0.3s;
 }
 
-.card:hover {
-  transform:translateY(-10px);
-}
+.card:hover {transform:translateY(-10px);}
 
 button {
   margin-top:10px;
@@ -72,17 +56,24 @@ button {
   border:none;
   background:black;
   color:white;
-  letter-spacing:1px;
   cursor:pointer;
 }
 
-/* ANIMACIÓN */
-@keyframes fade {
-  from {opacity:0; transform:translateY(30px);}
-  to {opacity:1; transform:translateY(0);}
+/* FOOTER */
+footer {
+  background:white;
+  padding:40px;
+  text-align:center;
+  margin-top:60px;
 }
 
-/* RESPONSIVE */
+iframe {
+  width:100%;
+  height:250px;
+  border:none;
+  border-radius:10px;
+}
+
 @media(max-width:768px){
   .grid {grid-template-columns:1fr;}
 }
@@ -96,31 +87,41 @@ button {
   <div class="cart" onclick="irCarrito()">🛒 (<span id="count">0</span>)</div>
 </header>
 
-<div class="banner">
-  Own Your Style
-</div>
+<div class="banner">Own Your Style</div>
 
+<!-- NOVEDADES -->
+<div class="section">
+<h2>NOVEDADES</h2>
 <div class="grid">
 
-  <div class="card">
-    <h3>Vestido Arena</h3>
-    <p>$15000</p>
-    <button onclick="add('Vestido Arena',15000)">Agregar</button>
-  </div>
-
-  <div class="card">
-    <h3>Blazer Nude</h3>
-    <p>$25000</p>
-    <button onclick="add('Blazer Nude',25000)">Agregar</button>
-  </div>
-
-  <div class="card">
-    <h3>Top Blanco</h3>
-    <p>$9000</p>
-    <button onclick="add('Top Blanco',9000)">Agregar</button>
-  </div>
+<div class="card"><h3>Vestido Arena</h3><p>$15000</p><button onclick="add('Vestido Arena',15000)">Agregar</button></div>
+<div class="card"><h3>Top Blanco</h3><p>$9000</p><button onclick="add('Top Blanco',9000)">Agregar</button></div>
+<div class="card"><h3>Blazer Nude</h3><p>$25000</p><button onclick="add('Blazer Nude',25000)">Agregar</button></div>
 
 </div>
+</div>
+
+<!-- MÁS VENDIDOS -->
+<div class="section">
+<h2>MÁS VENDIDOS</h2>
+<div class="grid">
+
+<div class="card"><h3>Vestido Negro</h3><p>$17000</p><button onclick="add('Vestido Negro',17000)">Agregar</button></div>
+<div class="card"><h3>Pantalón Sastrero</h3><p>$18000</p><button onclick="add('Pantalón Sastrero',18000)">Agregar</button></div>
+<div class="card"><h3>Conjunto Beige</h3><p>$20000</p><button onclick="add('Conjunto Beige',20000)">Agregar</button></div>
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<h3>Visitános</h3>
+<p>Concordia 525</p>
+
+<iframe src="https://www.google.com/maps?q=Concordia+525&output=embed"></iframe>
+
+<p style="margin-top:20px;">© 2026 ARRIBA MODA</p>
+</footer>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
