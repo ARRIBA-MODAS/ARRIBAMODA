@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ARRIBA MODA</title>
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 20px;
+  background: #f8f8f8;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 300;
+}
+
+.product {
+  background: white;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+button {
+  background: black;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+#cart {
+  margin-top: 40px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>ARRIBA MODA</h1>
+
+<div class="product">
+  <h3>Vestido Beige</h3>
+  <p>$15000</p>
+  <button onclick="addToCart('Vestido Beige',15000)">Agregar</button>
+</div>
+
+<div class="product">
+  <h3>Top Blanco</h3>
+  <p>$9000</p>
+  <button onclick="addToCart('Top Blanco',9000)">Agregar</button>
+</div>
+
+<div id="cart">
+  <h2>Carrito</h2>
+  <div id="cart-items"></div>
+  <h3>Total: $<span id="total">0</span></h3>
+
+  <button onclick="checkout()">Comprar por WhatsApp</button>
+</div>
+
+<script>
+let cart = [];
+
+function addToCart(name, price) {
+  cart.push({name, price});
+  renderCart();
+}
+
+function renderCart() {
+  let container = document.getElementById("cart-items");
+  let total = 0;
+
+  container.innerHTML = "";
+
+  cart.forEach(item => {
+    container.innerHTML += `<p>${item.name} - $${item.price}</p>`;
+    total += item.price;
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+function checkout() {
+  let message = "Hola quiero comprar:%0A";
+
+  cart.forEach(item => {
+    message += `- ${item.name}%0A`;
+  });
+
+  let total = cart.reduce((sum, item) => sum + item.price, 0);
+  message += `%0ATotal: $${total}`;
+
+  let phone = "TU_NUMERO";
+  window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+}
+</script>
+
+</body>
+</html>
