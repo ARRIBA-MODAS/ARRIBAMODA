@@ -10,7 +10,6 @@
 <style>
 body {margin:0;font-family:'Poppins', sans-serif;background:#fafafa;color:#111;}
 
-/* HEADER */
 header {
   display:flex;
   justify-content:space-between;
@@ -21,16 +20,9 @@ header {
   top:0;
 }
 
-nav a {
-  margin:0 10px;
-  text-decoration:none;
-  color:#111;
-  font-size:14px;
-}
-
+nav a {margin:0 10px;text-decoration:none;color:#111;font-size:14px;}
 .cart {cursor:pointer;}
 
-/* BANNER */
 .banner {
   height:60vh;
   display:flex;
@@ -40,7 +32,6 @@ nav a {
   font-size:40px;
 }
 
-/* SECCIONES */
 .section {padding:60px 20px;}
 .section h2 {text-align:center;margin-bottom:40px;font-weight:300;}
 
@@ -76,10 +67,10 @@ button {
   cursor:pointer;
 }
 
-/* TOAST */
+/* TOAST FIX */
 #toast {
   position: fixed;
-  top: 20px;
+  top: 70px;
   right: 20px;
   background: white;
   padding: 15px 20px;
@@ -90,19 +81,20 @@ button {
   transform: translateY(-20px);
   transition: 0.4s;
   z-index: 999;
+  pointer-events: none; /* 👈 FIX */
 }
 #toast.show {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* FOOTER */
 footer {
   background:white;
   padding:40px;
   text-align:center;
   margin-top:60px;
 }
+
 iframe {
   width:100%;
   height:250px;
@@ -120,18 +112,15 @@ iframe {
 
 <header>
   <div>ARRIBA MODA</div>
-
   <nav>
     <a href="#novedades">Novedades</a>
     <a href="#vendidos">Más vendidos</a>
   </nav>
-
   <div class="cart" onclick="irCarrito()">🛒 (<span id="count">0</span>)</div>
 </header>
 
 <div class="banner">Own Your Style</div>
 
-<!-- NOVEDADES -->
 <div class="section" id="novedades">
 <h2>NOVEDADES</h2>
 <div class="grid">
@@ -160,7 +149,6 @@ iframe {
 </div>
 </div>
 
-<!-- MÁS VENDIDOS -->
 <div class="section" id="vendidos">
 <h2>MÁS VENDIDOS</h2>
 <div class="grid">
@@ -189,15 +177,12 @@ iframe {
 </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
 <h3>Visitános</h3>
 <p>Concordia 525</p>
 <iframe src="https://www.google.com/maps?q=Concordia+525&output=embed"></iframe>
-<p style="margin-top:20px;">© 2026 ARRIBA MODA</p>
 </footer>
 
-<!-- TOAST -->
 <div id="toast"></div>
 
 <script>
@@ -215,14 +200,9 @@ function add(nombre, precio, cId, qId){
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCount();
 
-  toast(nombre, color, cantidad);
-}
-
-function toast(nombre, color, cantidad){
   let t = document.getElementById("toast");
   t.innerHTML = `✔ ${nombre}<br>Color: ${color} | Cant: ${cantidad}`;
   t.classList.add("show");
-
   setTimeout(()=>{t.classList.remove("show");},2500);
 }
 
