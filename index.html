@@ -67,7 +67,7 @@ button {
   cursor:pointer;
 }
 
-/* TOAST FIX */
+/* TOAST FIX REAL */
 #toast {
   position: fixed;
   top: 70px;
@@ -80,12 +80,13 @@ button {
   opacity: 0;
   transform: translateY(-20px);
   transition: 0.4s;
-  z-index: 999;
-  pointer-events: none; /* 👈 FIX */
+  z-index: -1; /* 👈 CLAVE */
 }
+
 #toast.show {
   opacity: 1;
   transform: translateY(0);
+  z-index: 999;
 }
 
 footer {
@@ -112,15 +113,18 @@ iframe {
 
 <header>
   <div>ARRIBA MODA</div>
+
   <nav>
     <a href="#novedades">Novedades</a>
     <a href="#vendidos">Más vendidos</a>
   </nav>
+
   <div class="cart" onclick="irCarrito()">🛒 (<span id="count">0</span>)</div>
 </header>
 
 <div class="banner">Own Your Style</div>
 
+<!-- NOVEDADES -->
 <div class="section" id="novedades">
 <h2>NOVEDADES</h2>
 <div class="grid">
@@ -149,6 +153,7 @@ iframe {
 </div>
 </div>
 
+<!-- MÁS VENDIDOS -->
 <div class="section" id="vendidos">
 <h2>MÁS VENDIDOS</h2>
 <div class="grid">
@@ -177,6 +182,7 @@ iframe {
 </div>
 </div>
 
+<!-- FOOTER -->
 <footer>
 <h3>Visitános</h3>
 <p>Concordia 525</p>
@@ -203,7 +209,8 @@ function add(nombre, precio, cId, qId){
   let t = document.getElementById("toast");
   t.innerHTML = `✔ ${nombre}<br>Color: ${color} | Cant: ${cantidad}`;
   t.classList.add("show");
-  setTimeout(()=>{t.classList.remove("show");},2500);
+
+  setTimeout(()=>{t.classList.remove("show");},1800);
 }
 
 function irCarrito(){
