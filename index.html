@@ -5,16 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARRIBA MODA</title>
 
-<!-- FUENTE PREMIUM -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin:0;
-  font-family:'Poppins', sans-serif;
-  background:#fafafa;
-  color:#111;
-}
+body {margin:0;font-family:'Poppins', sans-serif;background:#fafafa;color:#111;}
 
 /* HEADER */
 header {
@@ -26,8 +20,6 @@ header {
   position:sticky;
   top:0;
 }
-
-.logo {letter-spacing:4px;}
 
 nav a {
   margin:0 10px;
@@ -60,14 +52,12 @@ nav a {
   margin:auto;
 }
 
-/* CARD */
 .card {
   background:white;
   padding:20px;
   text-align:center;
   transition:0.3s;
 }
-
 .card:hover {transform:translateY(-8px);}
 
 select, input {
@@ -86,7 +76,40 @@ button {
   cursor:pointer;
 }
 
-/* RESPONSIVE */
+/* TOAST */
+#toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: 0.4s;
+  z-index: 999;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* FOOTER */
+footer {
+  background:white;
+  padding:40px;
+  text-align:center;
+  margin-top:60px;
+}
+iframe {
+  width:100%;
+  height:250px;
+  border:none;
+  border-radius:10px;
+}
+
 @media(max-width:768px){
   .grid {grid-template-columns:1fr;}
 }
@@ -96,7 +119,7 @@ button {
 <body>
 
 <header>
-  <div class="logo">ARRIBA MODA</div>
+  <div>ARRIBA MODA</div>
 
   <nav>
     <a href="#novedades">Novedades</a>
@@ -111,52 +134,27 @@ button {
 <!-- NOVEDADES -->
 <div class="section" id="novedades">
 <h2>NOVEDADES</h2>
-
 <div class="grid">
 
 <div class="card">
-  <h3>Vestido Arena</h3>
-  <p>$15000</p>
-
-  <select id="color1">
-    <option>Negro</option>
-    <option>Blanco</option>
-    <option>Gris</option>
-  </select>
-
-  <input type="number" id="cant1" min="1" max="5" value="1">
-
-  <button onclick="add('Vestido Arena',15000,'color1','cant1')">Agregar</button>
+<h3>Vestido Arena</h3><p>$15000</p>
+<select id="c1"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
+<input type="number" id="q1" min="1" max="5" value="1">
+<button onclick="add('Vestido Arena',15000,'c1','q1')">Agregar</button>
 </div>
 
 <div class="card">
-  <h3>Top Blanco</h3>
-  <p>$9000</p>
-
-  <select id="color2">
-    <option>Negro</option>
-    <option>Blanco</option>
-    <option>Gris</option>
-  </select>
-
-  <input type="number" id="cant2" min="1" max="5" value="1">
-
-  <button onclick="add('Top Blanco',9000,'color2','cant2')">Agregar</button>
+<h3>Top Blanco</h3><p>$9000</p>
+<select id="c2"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
+<input type="number" id="q2" min="1" max="5" value="1">
+<button onclick="add('Top Blanco',9000,'c2','q2')">Agregar</button>
 </div>
 
 <div class="card">
-  <h3>Blazer Nude</h3>
-  <p>$25000</p>
-
-  <select id="color3">
-    <option>Negro</option>
-    <option>Blanco</option>
-    <option>Gris</option>
-  </select>
-
-  <input type="number" id="cant3" min="1" max="5" value="1">
-
-  <button onclick="add('Blazer Nude',25000,'color3','cant3')">Agregar</button>
+<h3>Blazer Nude</h3><p>$25000</p>
+<select id="c3"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
+<input type="number" id="q3" min="1" max="5" value="1">
+<button onclick="add('Blazer Nude',25000,'c3','q3')">Agregar</button>
 </div>
 
 </div>
@@ -165,56 +163,42 @@ button {
 <!-- MÁS VENDIDOS -->
 <div class="section" id="vendidos">
 <h2>MÁS VENDIDOS</h2>
-
 <div class="grid">
 
 <div class="card">
-  <h3>Vestido Negro</h3>
-  <p>$17000</p>
-
-  <select id="color4">
-    <option>Negro</option>
-    <option>Blanco</option>
-    <option>Gris</option>
-  </select>
-
-  <input type="number" id="cant4" min="1" max="5" value="1">
-
-  <button onclick="add('Vestido Negro',17000,'color4','cant4')">Agregar</button>
+<h3>Vestido Negro</h3><p>$17000</p>
+<select id="c4"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
+<input type="number" id="q4" min="1" max="5" value="1">
+<button onclick="add('Vestido Negro',17000,'c4','q4')">Agregar</button>
 </div>
 
 <div class="card">
-  <h3>Pantalón Sastrero</h3>
-  <p>$18000</p>
-
-  <select id="color5">
-    <option>Negro</option>
-    <option>Blanco</option>
-    <option>Gris</option>
-  </select>
-
-  <input type="number" id="cant5" min="1" max="5" value="1">
-
-  <button onclick="add('Pantalón Sastrero',18000,'color5','cant5')">Agregar</button>
+<h3>Pantalón Sastrero</h3><p>$18000</p>
+<select id="c5"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
+<input type="number" id="q5" min="1" max="5" value="1">
+<button onclick="add('Pantalón Sastrero',18000,'c5','q5')">Agregar</button>
 </div>
 
 <div class="card">
-  <h3>Conjunto Beige</h3>
-  <p>$20000</p>
-
-  <select id="color6">
-    <option>Negro</option>
-    <option>Blanco</option>
-    <option>Gris</option>
-  </select>
-
-  <input type="number" id="cant6" min="1" max="5" value="1">
-
-  <button onclick="add('Conjunto Beige',20000,'color6','cant6')">Agregar</button>
+<h3>Conjunto Beige</h3><p>$20000</p>
+<select id="c6"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
+<input type="number" id="q6" min="1" max="5" value="1">
+<button onclick="add('Conjunto Beige',20000,'c6','q6')">Agregar</button>
 </div>
 
 </div>
 </div>
+
+<!-- FOOTER -->
+<footer>
+<h3>Visitános</h3>
+<p>Concordia 525</p>
+<iframe src="https://www.google.com/maps?q=Concordia+525&output=embed"></iframe>
+<p style="margin-top:20px;">© 2026 ARRIBA MODA</p>
+</footer>
+
+<!-- TOAST -->
+<div id="toast"></div>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -223,13 +207,23 @@ function updateCount(){
   document.getElementById("count").innerText = cart.length;
 }
 
-function add(nombre, precio, colorId, cantId){
-  let color = document.getElementById(colorId).value;
-  let cantidad = parseInt(document.getElementById(cantId).value);
+function add(nombre, precio, cId, qId){
+  let color = document.getElementById(cId).value;
+  let cantidad = parseInt(document.getElementById(qId).value);
 
   cart.push({nombre, precio, color, cantidad});
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCount();
+
+  toast(nombre, color, cantidad);
+}
+
+function toast(nombre, color, cantidad){
+  let t = document.getElementById("toast");
+  t.innerHTML = `✔ ${nombre}<br>Color: ${color} | Cant: ${cantidad}`;
+  t.classList.add("show");
+
+  setTimeout(()=>{t.classList.remove("show");},2500);
 }
 
 function irCarrito(){
