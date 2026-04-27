@@ -23,7 +23,16 @@ header {
 
 nav a {margin:0 15px;color:white;text-decoration:none;}
 
-/* BANNER MEJORADO */
+/* ICONO CARRITO */
+.cart {
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:16px;
+}
+
+/* BANNER */
 .banner {
   height:90vh;
   display:flex;
@@ -33,7 +42,6 @@ nav a {margin:0 15px;color:white;text-decoration:none;}
   position:relative;
 }
 
-/* DEGRADADO */
 .banner::before {
   content:"";
   position:absolute;
@@ -146,11 +154,16 @@ iframe {width:100%;height:250px;border:none;border-radius:10px;}
 
 <header>
   <div>ARRIBA MODA</div>
+
   <nav>
     <a href="#">NOVEDADES</a>
     <a href="#">MÁS VENDIDOS</a>
   </nav>
-  <div>🛒 (<span id="count">0</span>)</div>
+
+  <!-- 🛒 ICONO -->
+  <div class="cart" onclick="irCarrito()">
+    🛒 <span id="count">0</span>
+  </div>
 </header>
 
 <!-- BANNER -->
@@ -173,21 +186,22 @@ iframe {width:100%;height:250px;border:none;border-radius:10px;}
 <h3>Remera Morley</h3>
 <p>$12000</p>
 
-<!-- COLORES -->
 <div class="colors" id="c1">
   <div class="color negro active" onclick="color(this,'c1')"></div>
   <div class="color blanco" onclick="color(this,'c1')"></div>
   <div class="color gris" onclick="color(this,'c1')"></div>
 </div>
 
-<!-- CANTIDAD -->
 <div class="qty">
   <button onclick="qty('q1',-1)">-</button>
   <span id="q1">1</span>
   <button onclick="qty('q1',1)">+</button>
 </div>
 
-<button class="add" onclick="add('Remera Morley',12000,'c1','q1')">AGREGAR</button>
+<button class="add" onclick="add('Remera Morley',12000,'c1','q1')">
+AGREGAR
+</button>
+
 </div>
 
 <div class="card"></div>
@@ -231,7 +245,11 @@ function add(nombre,precio,cid,qid){
   localStorage.setItem("cart",JSON.stringify(cart));
   update();
 
-  alert("Agregado al carrito");
+  alert("Producto agregado 🛒");
+}
+
+function irCarrito(){
+  window.location.href = "carrito.html";
 }
 
 update();
