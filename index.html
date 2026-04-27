@@ -8,12 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin:0;
-  font-family:'Poppins', sans-serif;
-  background:#f5f5f5;
-  color:#111;
-}
+body {margin:0;font-family:'Poppins',sans-serif;background:#f5f5f5;color:#111;}
 
 /* HEADER */
 header {
@@ -26,37 +21,30 @@ header {
   z-index:2;
 }
 
-nav a {
-  margin:0 15px;
-  color:white;
-  text-decoration:none;
-  font-size:14px;
-}
+nav a {margin:0 15px;color:white;text-decoration:none;}
 
-/* BANNER */
+/* BANNER MEJORADO */
 .banner {
   height:90vh;
   display:flex;
   align-items:center;
-  background: url('banner.jpg') right center/cover no-repeat;
+  background: url('banner.jpg') right center/contain no-repeat;
+  background-color:#2b2b2b;
   position:relative;
 }
 
-/* DEGRADADO OSCURO IZQUIERDA */
+/* DEGRADADO */
 .banner::before {
   content:"";
   position:absolute;
   width:60%;
   height:100%;
-  background: linear-gradient(to right, rgba(0,0,0,0.9), rgba(0,0,0,0));
-  left:0;
-  top:0;
+  background: linear-gradient(to right, rgba(0,0,0,0.9), transparent);
 }
 
 /* TEXTO */
 .banner-text {
   position:relative;
-  z-index:2;
   color:white;
   padding-left:60px;
 }
@@ -65,31 +53,13 @@ nav a {
   font-family:'Playfair Display', serif;
   font-size:90px;
   line-height:0.9;
-  margin:0;
 }
 
-.banner-text span {
-  color:#c2a383;
-}
+.banner-text span {color:#c2a383;}
+.banner-text p {letter-spacing:3px;color:#ccc;}
 
-.banner-text p {
-  margin-top:20px;
-  letter-spacing:3px;
-  font-size:14px;
-  color:#ccc;
-}
-
-/* SECCIONES */
-.section {
-  padding:60px 20px;
-}
-
-.section h2 {
-  text-align:center;
-  font-weight:300;
-  letter-spacing:3px;
-  margin-bottom:40px;
-}
+/* PRODUCTOS */
+.section {padding:60px 20px;}
 
 .grid {
   display:grid;
@@ -102,7 +72,8 @@ nav a {
 .card {
   background:white;
   padding:15px;
-  border-radius:10px;
+  border-radius:12px;
+  text-align:center;
 }
 
 .card img {
@@ -110,9 +81,50 @@ nav a {
   border-radius:10px;
 }
 
-button {
+/* COLORES */
+.colors {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:10px 0;
+}
+
+.color {
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  cursor:pointer;
+  border:2px solid transparent;
+}
+
+.negro {background:black;}
+.blanco {background:white;border:1px solid #ccc;}
+.gris {background:gray;}
+
+.color.active {border:2px solid black;}
+
+/* CANTIDAD */
+.qty {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin:10px 0;
+}
+
+.qty button {
+  width:30px;
+  height:30px;
+  border:none;
+  background:#eee;
+  cursor:pointer;
+}
+
+.qty span {min-width:20px;}
+
+/* BOTON */
+button.add {
   width:100%;
-  margin-top:10px;
   padding:12px;
   background:black;
   color:white;
@@ -120,23 +132,12 @@ button {
 }
 
 /* FOOTER */
-footer {
-  margin-top:60px;
-  padding:40px;
-  text-align:center;
-}
+footer {padding:40px;text-align:center;}
+iframe {width:100%;height:250px;border:none;border-radius:10px;}
 
-iframe {
-  width:100%;
-  height:250px;
-  border:none;
-  border-radius:10px;
-}
-
-/* RESPONSIVE */
 @media(max-width:768px){
-  .banner-text h1 {font-size:50px;}
   .grid {grid-template-columns:1fr;}
+  .banner-text h1 {font-size:50px;}
 }
 </style>
 </head>
@@ -145,13 +146,11 @@ iframe {
 
 <header>
   <div>ARRIBA MODA</div>
-
   <nav>
     <a href="#">NOVEDADES</a>
     <a href="#">MÁS VENDIDOS</a>
   </nav>
-
-  <div>🛒</div>
+  <div>🛒 (<span id="count">0</span>)</div>
 </header>
 
 <!-- BANNER -->
@@ -164,15 +163,31 @@ iframe {
 
 <!-- PRODUCTOS -->
 <div class="section">
-<h2>NOVEDADES</h2>
+<h2 style="text-align:center;">NOVEDADES</h2>
 
 <div class="grid">
 
 <div class="card">
 <img src="banner.jpg">
+
 <h3>Remera Morley</h3>
 <p>$12000</p>
-<button>Agregar</button>
+
+<!-- COLORES -->
+<div class="colors" id="c1">
+  <div class="color negro active" onclick="color(this,'c1')"></div>
+  <div class="color blanco" onclick="color(this,'c1')"></div>
+  <div class="color gris" onclick="color(this,'c1')"></div>
+</div>
+
+<!-- CANTIDAD -->
+<div class="qty">
+  <button onclick="qty('q1',-1)">-</button>
+  <span id="q1">1</span>
+  <button onclick="qty('q1',1)">+</button>
+</div>
+
+<button class="add" onclick="add('Remera Morley',12000,'c1','q1')">AGREGAR</button>
 </div>
 
 <div class="card"></div>
@@ -186,6 +201,41 @@ iframe {
 <p>Concordia 525</p>
 <iframe src="https://www.google.com/maps?q=Concordia+525&output=embed"></iframe>
 </footer>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function update(){
+  document.getElementById("count").innerText = cart.length;
+}
+
+function color(el,id){
+  document.querySelectorAll(`#${id} .color`).forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
+}
+
+function qty(id,val){
+  let e=document.getElementById(id);
+  let n=parseInt(e.innerText);
+  n+=val;
+  if(n<1)n=1;
+  if(n>5)n=5;
+  e.innerText=n;
+}
+
+function add(nombre,precio,cid,qid){
+  let cantidad=parseInt(document.getElementById(qid).innerText);
+  let col=document.querySelector(`#${cid} .active`).classList[1];
+
+  cart.push({nombre,precio,color:col,cantidad});
+  localStorage.setItem("cart",JSON.stringify(cart));
+  update();
+
+  alert("Agregado al carrito");
+}
+
+update();
+</script>
 
 </body>
 </html>
