@@ -16,6 +16,7 @@ header {
   width:100%;
   display:flex;
   justify-content:space-between;
+  align-items:center;
   padding:20px 40px;
   color:white;
   z-index:2;
@@ -29,17 +30,49 @@ nav a {
   font-size:14px;
 }
 
-/* CARRITO MINIMAL */
+/* 🛒 ICONO SVG */
 .cart {
+  position:relative;
   cursor:pointer;
+}
+
+.cart svg {
   width:24px;
   height:24px;
-  border:1px solid white;
+  stroke:white;
+}
+
+/* contador */
+.cart-count {
+  position:absolute;
+  top:-6px;
+  right:-8px;
+  background:white;
+  color:black;
+  font-size:10px;
+  padding:2px 6px;
   border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
+}
+
+/* 🔔 NOTIFICACIÓN */
+#notif {
+  position:absolute;
+  top:60px;
+  right:40px;
+  background:white;
+  color:black;
+  padding:12px 16px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  font-size:13px;
+  opacity:0;
+  transform:translateY(-10px);
+  transition:0.3s;
+}
+
+#notif.show {
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* BANNER */
@@ -72,21 +105,9 @@ nav a {
   line-height:0.9;
 }
 
-.banner-text span {color:#c2a383;}
-
-/* SECCIONES */
-.section {
-  padding:60px 20px;
-}
-
-.section h2 {
-  text-align:center;
-  margin-bottom:40px;
-  font-weight:300;
-  letter-spacing:2px;
-}
-
 /* GRID */
+.section {padding:60px 20px;}
+
 .grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -95,7 +116,6 @@ nav a {
   margin:auto;
 }
 
-/* CARD */
 .card {
   background:white;
   padding:15px;
@@ -118,10 +138,6 @@ nav a {
 /* BOTON */
 button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
 
-@media(max-width:768px){
-.grid{grid-template-columns:1fr;}
-.banner-text h1{font-size:50px;}
-}
 </style>
 </head>
 
@@ -130,28 +146,38 @@ button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
 <header>
   <div>ARRIBA MODA</div>
 
-  <!-- MENU -->
   <nav>
     <a href="#novedades">Novedades</a>
     <a href="#vendidos">Más vendidos</a>
   </nav>
 
+  <!-- 🛒 ICONO PRO -->
   <div class="cart" onclick="irCarrito()">
-    <span id="count">0</span>
+
+    <svg fill="none" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M6 6h15l-1.5 9h-13z"/>
+      <circle cx="9" cy="20" r="1"/>
+      <circle cx="18" cy="20" r="1"/>
+    </svg>
+
+    <div class="cart-count" id="count">0</div>
+
   </div>
+
+  <!-- NOTIFICACIÓN -->
+  <div id="notif"></div>
+
 </header>
 
 <!-- BANNER -->
 <div class="banner">
   <div class="banner-text">
-    <h1>OWN<br>YOUR<br><span>STYLE</span></h1>
+    <h1>OWN<br>YOUR<br>STYLE</h1>
   </div>
 </div>
 
 <!-- NOVEDADES -->
 <div class="section" id="novedades">
-<h2>NOVEDADES</h2>
-
 <div class="grid">
 
 <div class="card">
@@ -173,20 +199,6 @@ button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
 <button onclick="add('Remera Morley',12000,'c1','q1')">Agregar</button>
 </div>
 
-<div class="card"></div>
-<div class="card"></div>
-
-</div>
-</div>
-
-<!-- MAS VENDIDOS -->
-<div class="section" id="vendidos">
-<h2>MÁS VENDIDOS</h2>
-
-<div class="grid">
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
 </div>
 </div>
 
@@ -194,36 +206,46 @@ button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function update(){
-document.getElementById("count").innerText = cart.length;
+  document.getElementById("count").innerText = cart.length;
 }
 
 function sel(el,id){
-document.querySelectorAll(`#${id} .color`).forEach(c=>c.classList.remove("active"));
-el.classList.add("active");
+  document.querySelectorAll(`#${id} .color`).forEach(c=>c.classList.remove("active"));
+  el.classList.add("active");
 }
 
 function q(id,v){
-let e=document.getElementById(id);
-let n=parseInt(e.innerText);
-n+=v;
-if(n<1)n=1;
-if(n>5)n=5;
-e.innerText=n;
+  let e=document.getElementById(id);
+  let n=parseInt(e.innerText);
+  n+=v;
+  if(n<1)n=1;
+  if(n>5)n=5;
+  e.innerText=n;
 }
 
 function add(n,p,cid,qid){
-let cantidad=parseInt(document.getElementById(qid).innerText);
-let color=document.querySelector(`#${cid} .active`).classList[1];
+  let cantidad=parseInt(document.getElementById(qid).innerText);
+  let color=document.querySelector(`#${cid} .active`).classList[1];
 
-cart.push({nombre:n,precio:p,color,cantidad});
-localStorage.setItem("cart",JSON.stringify(cart));
-update();
+  cart.push({nombre:n,precio:p,color,cantidad});
+  localStorage.setItem("cart",JSON.stringify(cart));
+  update();
 
-alert("Agregado al carrito");
+  /* 🔔 NOTIF */
+  let notif = document.getElementById("notif");
+  notif.innerHTML = `
+    ✔ ${n}<br>
+    ${color} | x${cantidad}
+  `;
+  notif.classList.add("show");
+
+  setTimeout(()=>{
+    notif.classList.remove("show");
+  },2000);
 }
 
 function irCarrito(){
-window.location.href="carrito.html";
+  window.location.href="carrito.html";
 }
 
 update();
