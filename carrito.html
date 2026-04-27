@@ -18,8 +18,6 @@ button {
   color:white;
   border:none;
 }
-
-a {text-decoration:none;}
 </style>
 </head>
 
@@ -91,7 +89,7 @@ function comprar(){
   let total = cart.reduce((sum,i)=>sum + (i.precio * i.cantidad),0);
   mensaje += `%0ATotal: $${total}`;
 
-  let numero = "1168522582";
+  let numero = "TU_NUMERO";
   window.open(`https://wa.me/${numero}?text=${mensaje}`);
 }
 
