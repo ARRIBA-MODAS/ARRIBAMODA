@@ -23,15 +23,34 @@ header {
 nav a {margin:0 10px;text-decoration:none;color:#111;font-size:14px;}
 .cart {cursor:pointer;}
 
+/* BANNER PREMIUM */
 .banner {
-  height:60vh;
+  height:70vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#eae7e1;
-  font-size:40px;
+  background: url('https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+  position:relative;
 }
 
+.banner::after {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(255,255,255,0.3);
+}
+
+.banner h1 {
+  position:relative;
+  font-size:48px;
+  font-weight:300;
+  letter-spacing:2px;
+}
+
+/* SECCIONES */
 .section {padding:60px 20px;}
 .section h2 {text-align:center;margin-bottom:40px;font-weight:300;}
 
@@ -129,6 +148,7 @@ button {
   z-index: 999;
 }
 
+/* FOOTER */
 footer {
   background:white;
   padding:40px;
@@ -162,7 +182,10 @@ iframe {
   <div class="cart" onclick="irCarrito()">🛒 (<span id="count">0</span>)</div>
 </header>
 
-<div class="banner">Own Your Style</div>
+<!-- BANNER -->
+<div class="banner">
+  <h1>Own Your Style</h1>
+</div>
 
 <!-- PRODUCTO -->
 <div class="section">
@@ -189,6 +212,7 @@ iframe {
 </div>
 </div>
 
+<!-- FOOTER -->
 <footer>
 <h3>Visitános</h3>
 <p>Concordia 525</p>
@@ -234,6 +258,7 @@ function add(nombre, precio, cId, qId){
   let t = document.getElementById("toast");
   t.innerHTML = `✔ ${nombre}<br>Color: ${color} | Cant: ${cantidad}`;
   t.classList.add("show");
+
   setTimeout(()=>{t.classList.remove("show");},1800);
 }
 
