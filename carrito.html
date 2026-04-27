@@ -7,6 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+* { box-sizing: border-box; }
+
 body {
   font-family:'Poppins', sans-serif;
   margin:0;
@@ -23,12 +25,9 @@ header {
   border-bottom:1px solid #eee;
 }
 
-/* NAV */
-nav a {
-  margin:0 10px;
+a {
   text-decoration:none;
   color:black;
-  font-size:14px;
 }
 
 /* CONTENEDOR */
@@ -64,14 +63,31 @@ nav a {
   margin:20px 0;
 }
 
+/* AVISOS */
+.alert {
+  background:white;
+  border-left:4px solid black;
+  padding:12px 15px;
+  margin:15px 0;
+  font-size:14px;
+}
+
 /* BOTON */
 .btn {
-  display:inline-block;
-  padding:10px 15px;
+  display:block;
+  width:100%;
+  padding:15px;
   background:black;
   color:white;
-  text-decoration:none;
+  text-align:center;
+  border:none;
+  cursor:pointer;
   margin-top:10px;
+}
+
+.btn:disabled {
+  background:#aaa;
+  cursor:not-allowed;
 }
 
 .empty {
@@ -85,29 +101,30 @@ nav a {
 <body>
 
 <header>
-
-  <!-- VOLVER -->
   <a href="index.html">← Inicio</a>
-
-  <!-- NAV -->
-  <nav>
-    <a href="index.html#novedades">Novedades</a>
-    <a href="index.html#vendidos">Más vendidos</a>
-  </nav>
-
-  <div>🛒</div>
-
+  <div>Tu carrito</div>
 </header>
 
 <div class="container">
 
 <h2>Tu carrito</h2>
 
+<!-- ⚠️ AVISOS -->
+<div class="alert">
+Compra mínima: 3 unidades
+</div>
+
+<div class="alert">
+Compra mínima para envíos: $40.000
+</div>
+
 <div id="lista"></div>
 
 <div class="total">
 Total: $<span id="total">0</span>
 </div>
+
+<button class="btn" id="comprarBtn" onclick="enviar()">Finalizar por WhatsApp</button>
 
 <a class="btn" href="index.html">Seguir comprando</a>
 
@@ -117,18 +134,21 @@ Total: $<span id="total">0</span>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function render(){
-  let total=0;
-  let lista=document.getElementById("lista");
-  lista.innerHTML="";
+  let total = 0;
+  let unidades = 0;
+  let lista = document.getElementById("lista");
 
-  if(cart.length===0){
-    lista.innerHTML="<div class='empty'>Tu carrito está vacío</div>";
+  lista.innerHTML = "";
+
+  if(cart.length === 0){
+    lista.innerHTML = "<div class='empty'>Tu carrito está vacío</div>";
   }
 
   cart.forEach((item,i)=>{
-    total+=item.precio*item.cantidad;
+    total += item.precio * item.cantidad;
+    unidades += item.cantidad;
 
-    lista.innerHTML+=`
+    lista.innerHTML += `
     <div class="item">
       <div>
         ${item.nombre}<br>
@@ -136,20 +156,51 @@ function render(){
         Cant: ${item.cantidad}
       </div>
 
-      <div>$${item.precio*item.cantidad}</div>
+      <div>$${item.precio * item.cantidad}</div>
 
       <button class="remove" onclick="del(${i})">X</button>
     </div>
     `;
   });
 
-  document.getElementById("total").innerText=total;
-  localStorage.setItem("cart",JSON.stringify(cart));
+  document.getElementById("total").innerText = total;
+
+  /* 🔒 BLOQUEO BOTON */
+  let btn = document.getElementById("comprarBtn");
+  btn.disabled = unidades < 3;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 function del(i){
   cart.splice(i,1);
   render();
+}
+
+function enviar(){
+  let total = 0;
+  let unidades = 0;
+
+  cart.forEach(item=>{
+    total += item.precio * item.cantidad;
+    unidades += item.cantidad;
+  });
+
+  /* 🚫 BLOQUEO REAL */
+  if(unidades < 3){
+    alert("Debés comprar mínimo 3 unidades");
+    return;
+  }
+
+  let mensaje="Pedido:%0A";
+
+  cart.forEach(item=>{
+    mensaje+=`${item.nombre} (${item.color}) x${item.cantidad}%0A`;
+  });
+
+  mensaje+=`%0ATotal: $${total}`;
+
+  window.open(`https://wa.me/549XXXXXXXXXX?text=${mensaje}`);
 }
 
 render();
