@@ -12,7 +12,6 @@ body {
   font-family:'Poppins', sans-serif;
   margin:0;
   background:#f5f5f5;
-  color:#111;
 }
 
 /* HEADER */
@@ -22,11 +21,11 @@ header {
   display:flex;
   justify-content:space-between;
   align-items:center;
+  border-bottom:1px solid #eee;
 }
 
-a {
-  text-decoration:none;
-  color:black;
+.cart-icon {
+  font-size:22px;
 }
 
 /* CONTENEDOR */
@@ -71,19 +70,24 @@ a {
   text-align:center;
 }
 
-/* BOTON ELIMINAR */
+/* ELIMINAR */
 .remove {
-  background:red;
+  background:black;
   color:white;
   border:none;
-  padding:6px 10px;
+  padding:5px 10px;
   cursor:pointer;
 }
 
 /* TOTAL */
-.total {
-  font-size:22px;
-  margin:20px 0;
+.total-box {
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  margin-top:20px;
+  font-size:20px;
+  display:flex;
+  justify-content:space-between;
 }
 
 /* FORM */
@@ -94,7 +98,7 @@ input {
   border:1px solid #ddd;
 }
 
-/* BOTON FINAL */
+/* BOTON */
 button.final {
   width:100%;
   padding:15px;
@@ -106,7 +110,7 @@ button.final {
 
 .empty {
   text-align:center;
-  margin-top:50px;
+  margin-top:40px;
   color:#777;
 }
 </style>
@@ -116,15 +120,19 @@ button.final {
 
 <header>
   <a href="index.html">← Volver</a>
-  <div>🛒 Tu carrito</div>
+
+  <!-- 🛒 ICONO SIEMPRE VISIBLE -->
+  <div class="cart-icon">🛒 Carrito</div>
 </header>
 
 <div class="container">
 
 <div id="lista"></div>
 
-<div class="total">
-Total: $<span id="total">0</span>
+<!-- TOTAL -->
+<div class="total-box">
+  <span>Total</span>
+  <span>$<span id="total">0</span></span>
 </div>
 
 <h3>Datos</h3>
@@ -146,8 +154,6 @@ function render(){
 
   if(cart.length === 0){
     lista.innerHTML = "<div class='empty'>Tu carrito está vacío</div>";
-    document.getElementById("total").innerText = 0;
-    return;
   }
 
   cart.forEach((item, i) => {
@@ -190,13 +196,13 @@ function eliminar(i){
 }
 
 function enviar(){
-  let nombre = document.getElementById("nombre").value;
-  let direccion = document.getElementById("direccion").value;
-
   if(cart.length === 0){
     alert("El carrito está vacío");
     return;
   }
+
+  let nombre = document.getElementById("nombre").value;
+  let direccion = document.getElementById("direccion").value;
 
   let mensaje = "Pedido:%0A";
 
