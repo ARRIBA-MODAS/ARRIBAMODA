@@ -18,29 +18,55 @@ header {
   justify-content:space-between;
   padding:20px 40px;
   color:white;
+  z-index:2;
 }
 
-/* BANNER FIX */
+/* 🛒 MINIMAL */
+.cart {
+  cursor:pointer;
+  width:24px;
+  height:24px;
+  border:1px solid white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+}
+
+/* BANNER PERFECTO */
 .banner {
   height:90vh;
   display:flex;
   align-items:center;
   background: url('banner.jpg') right center no-repeat;
-  background-size:contain; /* 👈 clave para que no se corte */
-  background-color:#2b2b2b;
+  background-size:cover; /* 👈 FIX */
+  position:relative;
+}
+
+.banner::before {
+  content:"";
+  position:absolute;
+  width:60%;
+  height:100%;
+  background:linear-gradient(to right, rgba(0,0,0,0.85), transparent);
 }
 
 .banner-text {
+  position:relative;
   color:white;
   padding-left:60px;
 }
 
 .banner-text h1 {
   font-family:'Playfair Display', serif;
-  font-size:80px;
+  font-size:90px;
+  line-height:0.9;
 }
 
-/* GRID */
+.banner-text span {color:#c2a383;}
+
+/* PRODUCTOS */
 .grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -51,13 +77,13 @@ header {
 .card {
   background:white;
   padding:15px;
-  border-radius:10px;
+  border-radius:12px;
   text-align:center;
 }
 
 /* COLORES */
 .colors {display:flex;justify-content:center;gap:10px;margin:10px 0;}
-.color {width:18px;height:18px;border-radius:50%;cursor:pointer;}
+.color {width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid transparent;}
 .negro{background:black;}
 .blanco{background:white;border:1px solid #ccc;}
 .gris{background:gray;}
@@ -65,13 +91,29 @@ header {
 
 /* CANTIDAD */
 .qty {display:flex;justify-content:center;gap:10px;}
-.qty button {width:30px;height:30px;}
+.qty button {width:28px;height:28px;border:none;background:#eee;}
 
 /* BOTON */
-button {padding:10px;background:black;color:white;border:none;}
+button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
 
-.cart {cursor:pointer;}
+/* ✨ TOAST */
+#toast {
+  position:fixed;
+  top:30px;
+  right:30px;
+  background:black;
+  color:white;
+  padding:10px 15px;
+  border-radius:20px;
+  opacity:0;
+  transform:translateY(-20px);
+  transition:0.4s;
+}
 
+#toast.show {
+  opacity:1;
+  transform:translateY(0);
+}
 </style>
 </head>
 
@@ -79,12 +121,16 @@ button {padding:10px;background:black;color:white;border:none;}
 
 <header>
   <div>ARRIBA MODA</div>
-  <div class="cart" onclick="irCarrito()">🛒 (<span id="count">0</span>)</div>
+
+  <!-- ICONO MINIMAL -->
+  <div class="cart" onclick="irCarrito()">
+    <span id="count">0</span>
+  </div>
 </header>
 
 <div class="banner">
   <div class="banner-text">
-    <h1>OWN YOUR STYLE</h1>
+    <h1>OWN<br>YOUR<br><span>STYLE</span></h1>
   </div>
 </div>
 
@@ -110,6 +156,8 @@ button {padding:10px;background:black;color:white;border:none;}
 </div>
 
 </div>
+
+<div id="toast">Agregado</div>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -139,7 +187,11 @@ let color=document.querySelector(`#${cid} .active`).classList[1];
 cart.push({nombre:n,precio:p,color,cantidad});
 localStorage.setItem("cart",JSON.stringify(cart));
 update();
-alert("Agregado");
+
+/* toast */
+let t=document.getElementById("toast");
+t.classList.add("show");
+setTimeout(()=>t.classList.remove("show"),1500);
 }
 
 function irCarrito(){
