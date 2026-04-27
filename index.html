@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-body {margin:0;font-family:'Poppins',sans-serif;background:#f5f5f5;color:#111;}
+body {margin:0;font-family:'Poppins',sans-serif;background:#f5f5f5;}
 
 /* HEADER */
 header {
@@ -18,135 +18,60 @@ header {
   justify-content:space-between;
   padding:20px 40px;
   color:white;
-  z-index:2;
 }
 
-nav a {margin:0 15px;color:white;text-decoration:none;}
-
-/* ICONO CARRITO */
-.cart {
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  gap:5px;
-  font-size:16px;
-}
-
-/* BANNER */
+/* BANNER FIX */
 .banner {
   height:90vh;
   display:flex;
   align-items:center;
-  background: url('banner.jpg') right center/contain no-repeat;
+  background: url('banner.jpg') right center no-repeat;
+  background-size:contain; /* 👈 clave para que no se corte */
   background-color:#2b2b2b;
-  position:relative;
 }
 
-.banner::before {
-  content:"";
-  position:absolute;
-  width:60%;
-  height:100%;
-  background: linear-gradient(to right, rgba(0,0,0,0.9), transparent);
-}
-
-/* TEXTO */
 .banner-text {
-  position:relative;
   color:white;
   padding-left:60px;
 }
 
 .banner-text h1 {
   font-family:'Playfair Display', serif;
-  font-size:90px;
-  line-height:0.9;
+  font-size:80px;
 }
 
-.banner-text span {color:#c2a383;}
-.banner-text p {letter-spacing:3px;color:#ccc;}
-
-/* PRODUCTOS */
-.section {padding:60px 20px;}
-
+/* GRID */
 .grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:30px;
-  max-width:1100px;
-  margin:auto;
+  padding:40px;
 }
 
 .card {
   background:white;
   padding:15px;
-  border-radius:12px;
+  border-radius:10px;
   text-align:center;
 }
 
-.card img {
-  width:100%;
-  border-radius:10px;
-}
-
 /* COLORES */
-.colors {
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:10px 0;
-}
-
-.color {
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  cursor:pointer;
-  border:2px solid transparent;
-}
-
-.negro {background:black;}
-.blanco {background:white;border:1px solid #ccc;}
-.gris {background:gray;}
-
-.color.active {border:2px solid black;}
+.colors {display:flex;justify-content:center;gap:10px;margin:10px 0;}
+.color {width:18px;height:18px;border-radius:50%;cursor:pointer;}
+.negro{background:black;}
+.blanco{background:white;border:1px solid #ccc;}
+.gris{background:gray;}
+.active{border:2px solid black;}
 
 /* CANTIDAD */
-.qty {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  margin:10px 0;
-}
-
-.qty button {
-  width:30px;
-  height:30px;
-  border:none;
-  background:#eee;
-  cursor:pointer;
-}
-
-.qty span {min-width:20px;}
+.qty {display:flex;justify-content:center;gap:10px;}
+.qty button {width:30px;height:30px;}
 
 /* BOTON */
-button.add {
-  width:100%;
-  padding:12px;
-  background:black;
-  color:white;
-  border:none;
-}
+button {padding:10px;background:black;color:white;border:none;}
 
-/* FOOTER */
-footer {padding:40px;text-align:center;}
-iframe {width:100%;height:250px;border:none;border-radius:10px;}
+.cart {cursor:pointer;}
 
-@media(max-width:768px){
-  .grid {grid-template-columns:1fr;}
-  .banner-text h1 {font-size:50px;}
-}
 </style>
 </head>
 
@@ -154,102 +79,71 @@ iframe {width:100%;height:250px;border:none;border-radius:10px;}
 
 <header>
   <div>ARRIBA MODA</div>
-
-  <nav>
-    <a href="#">NOVEDADES</a>
-    <a href="#">MÁS VENDIDOS</a>
-  </nav>
-
-  <!-- 🛒 ICONO -->
-  <div class="cart" onclick="irCarrito()">
-    🛒 <span id="count">0</span>
-  </div>
+  <div class="cart" onclick="irCarrito()">🛒 (<span id="count">0</span>)</div>
 </header>
 
-<!-- BANNER -->
 <div class="banner">
   <div class="banner-text">
-    <h1>OWN<br>YOUR<br><span>STYLE</span></h1>
-    <p>SIMPLE. ELEGANTE. AUTÉNTICO.</p>
+    <h1>OWN YOUR STYLE</h1>
   </div>
 </div>
-
-<!-- PRODUCTOS -->
-<div class="section">
-<h2 style="text-align:center;">NOVEDADES</h2>
 
 <div class="grid">
 
 <div class="card">
-<img src="banner.jpg">
-
 <h3>Remera Morley</h3>
 <p>$12000</p>
 
 <div class="colors" id="c1">
-  <div class="color negro active" onclick="color(this,'c1')"></div>
-  <div class="color blanco" onclick="color(this,'c1')"></div>
-  <div class="color gris" onclick="color(this,'c1')"></div>
+<div class="color negro active" onclick="sel(this,'c1')"></div>
+<div class="color blanco" onclick="sel(this,'c1')"></div>
+<div class="color gris" onclick="sel(this,'c1')"></div>
 </div>
 
 <div class="qty">
-  <button onclick="qty('q1',-1)">-</button>
-  <span id="q1">1</span>
-  <button onclick="qty('q1',1)">+</button>
+<button onclick="q('q1',-1)">-</button>
+<span id="q1">1</span>
+<button onclick="q('q1',1)">+</button>
 </div>
 
-<button class="add" onclick="add('Remera Morley',12000,'c1','q1')">
-AGREGAR
-</button>
-
+<button onclick="add('Remera Morley',12000,'c1','q1')">Agregar</button>
 </div>
 
-<div class="card"></div>
-<div class="card"></div>
-
 </div>
-</div>
-
-<footer>
-<h3>VISITÁNOS</h3>
-<p>Concordia 525</p>
-<iframe src="https://www.google.com/maps?q=Concordia+525&output=embed"></iframe>
-</footer>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function update(){
-  document.getElementById("count").innerText = cart.length;
+document.getElementById("count").innerText = cart.length;
 }
 
-function color(el,id){
-  document.querySelectorAll(`#${id} .color`).forEach(c=>c.classList.remove("active"));
-  el.classList.add("active");
+function sel(el,id){
+document.querySelectorAll(`#${id} .color`).forEach(c=>c.classList.remove("active"));
+el.classList.add("active");
 }
 
-function qty(id,val){
-  let e=document.getElementById(id);
-  let n=parseInt(e.innerText);
-  n+=val;
-  if(n<1)n=1;
-  if(n>5)n=5;
-  e.innerText=n;
+function q(id,v){
+let e=document.getElementById(id);
+let n=parseInt(e.innerText);
+n+=v;
+if(n<1)n=1;
+if(n>5)n=5;
+e.innerText=n;
 }
 
-function add(nombre,precio,cid,qid){
-  let cantidad=parseInt(document.getElementById(qid).innerText);
-  let col=document.querySelector(`#${cid} .active`).classList[1];
+function add(n,p,cid,qid){
+let cantidad=parseInt(document.getElementById(qid).innerText);
+let color=document.querySelector(`#${cid} .active`).classList[1];
 
-  cart.push({nombre,precio,color:col,cantidad});
-  localStorage.setItem("cart",JSON.stringify(cart));
-  update();
-
-  alert("Producto agregado 🛒");
+cart.push({nombre:n,precio:p,color,cantidad});
+localStorage.setItem("cart",JSON.stringify(cart));
+update();
+alert("Agregado");
 }
 
 function irCarrito(){
-  window.location.href = "carrito.html";
+window.location.href="carrito.html";
 }
 
 update();
