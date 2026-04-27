@@ -5,7 +5,7 @@
 <title>Carrito</title>
 
 <style>
-body {font-family:sans-serif;background:#f5f5f5;margin:0;}
+body {font-family:sans-serif;background:#f5f5f5;}
 
 .container {max-width:800px;margin:auto;padding:20px;}
 
@@ -15,11 +15,15 @@ padding:15px;
 margin-bottom:10px;
 display:flex;
 justify-content:space-between;
+align-items:center;
 }
 
-.total {
-font-size:20px;
-margin:20px 0;
+.remove {
+background:black;
+color:white;
+border:none;
+cursor:pointer;
+padding:5px 10px;
 }
 </style>
 </head>
@@ -32,44 +36,46 @@ margin:20px 0;
 
 <div id="lista"></div>
 
-<div class="total">
-Total: $<span id="total">0</span>
-</div>
-
-<button onclick="enviar()">Comprar por WhatsApp</button>
+<div>Total: $<span id="total">0</span></div>
 
 </div>
 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let total = 0;
 
-cart.forEach(item=>{
-total += item.precio * item.cantidad;
+function render(){
+let total=0;
+let lista=document.getElementById("lista");
+lista.innerHTML="";
 
-document.getElementById("lista").innerHTML += `
+cart.forEach((item,i)=>{
+total+=item.precio*item.cantidad;
+
+lista.innerHTML+=`
 <div class="item">
 <div>
 ${item.nombre}<br>
 Color: ${item.color}<br>
-Cantidad: ${item.cantidad}
+Cant: ${item.cantidad}
 </div>
-<div>$${item.precio * item.cantidad}</div>
+
+<div>$${item.precio*item.cantidad}</div>
+
+<button class="remove" onclick="del(${i})">X</button>
 </div>
 `;
 });
 
-document.getElementById("total").innerText = total;
-
-function enviar(){
-let mensaje="Pedido:%0A";
-
-cart.forEach(item=>{
-mensaje+=`${item.nombre} x${item.cantidad}%0A`;
-});
-
-window.open(`https://wa.me/549XXXXXXXXXX?text=${mensaje}`);
+document.getElementById("total").innerText=total;
+localStorage.setItem("cart",JSON.stringify(cart));
 }
+
+function del(i){
+cart.splice(i,1);
+render();
+}
+
+render();
 </script>
 
 </body>
