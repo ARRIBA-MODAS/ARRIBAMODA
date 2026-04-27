@@ -51,13 +51,6 @@ nav a {margin:0 10px;text-decoration:none;color:#111;font-size:14px;}
 }
 .card:hover {transform:translateY(-8px);}
 
-select, input {
-  width:100%;
-  padding:8px;
-  margin:5px 0;
-  border:1px solid #ddd;
-}
-
 button {
   margin-top:10px;
   padding:10px;
@@ -67,7 +60,54 @@ button {
   cursor:pointer;
 }
 
-/* TOAST FIX REAL */
+/* COLORES */
+.colors {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:10px 0;
+}
+
+.color {
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  cursor:pointer;
+  border:2px solid transparent;
+}
+
+.color.negro {background:black;}
+.color.blanco {background:white; border:1px solid #ccc;}
+.color.gris {background:gray;}
+
+.color.active {
+  border:2px solid black;
+}
+
+/* CANTIDAD */
+.qty {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin:10px 0;
+}
+
+.qty button {
+  width:30px;
+  height:30px;
+  border:none;
+  background:black;
+  color:white;
+  cursor:pointer;
+}
+
+.qty span {
+  min-width:20px;
+  text-align:center;
+}
+
+/* TOAST */
 #toast {
   position: fixed;
   top: 70px;
@@ -80,7 +120,7 @@ button {
   opacity: 0;
   transform: translateY(-20px);
   transition: 0.4s;
-  z-index: -1; /* 👈 CLAVE */
+  z-index: -1;
 }
 
 #toast.show {
@@ -124,65 +164,31 @@ iframe {
 
 <div class="banner">Own Your Style</div>
 
-<!-- NOVEDADES -->
-<div class="section" id="novedades">
-<h2>NOVEDADES</h2>
+<!-- PRODUCTO -->
+<div class="section">
 <div class="grid">
 
 <div class="card">
 <h3>Vestido Arena</h3><p>$15000</p>
-<select id="c1"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
-<input type="number" id="q1" min="1" max="5" value="1">
+
+<div class="colors" id="c1">
+  <span class="color negro active" onclick="selectColor(this,'c1')"></span>
+  <span class="color blanco" onclick="selectColor(this,'c1')"></span>
+  <span class="color gris" onclick="selectColor(this,'c1')"></span>
+</div>
+
+<div class="qty">
+  <button onclick="changeQty('q1', -1)">−</button>
+  <span id="q1">1</span>
+  <button onclick="changeQty('q1', 1)">+</button>
+</div>
+
 <button onclick="add('Vestido Arena',15000,'c1','q1')">Agregar</button>
 </div>
 
-<div class="card">
-<h3>Top Blanco</h3><p>$9000</p>
-<select id="c2"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
-<input type="number" id="q2" min="1" max="5" value="1">
-<button onclick="add('Top Blanco',9000,'c2','q2')">Agregar</button>
-</div>
-
-<div class="card">
-<h3>Blazer Nude</h3><p>$25000</p>
-<select id="c3"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
-<input type="number" id="q3" min="1" max="5" value="1">
-<button onclick="add('Blazer Nude',25000,'c3','q3')">Agregar</button>
-</div>
-
 </div>
 </div>
 
-<!-- MÁS VENDIDOS -->
-<div class="section" id="vendidos">
-<h2>MÁS VENDIDOS</h2>
-<div class="grid">
-
-<div class="card">
-<h3>Vestido Negro</h3><p>$17000</p>
-<select id="c4"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
-<input type="number" id="q4" min="1" max="5" value="1">
-<button onclick="add('Vestido Negro',17000,'c4','q4')">Agregar</button>
-</div>
-
-<div class="card">
-<h3>Pantalón Sastrero</h3><p>$18000</p>
-<select id="c5"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
-<input type="number" id="q5" min="1" max="5" value="1">
-<button onclick="add('Pantalón Sastrero',18000,'c5','q5')">Agregar</button>
-</div>
-
-<div class="card">
-<h3>Conjunto Beige</h3><p>$20000</p>
-<select id="c6"><option>Negro</option><option>Blanco</option><option>Gris</option></select>
-<input type="number" id="q6" min="1" max="5" value="1">
-<button onclick="add('Conjunto Beige',20000,'c6','q6')">Agregar</button>
-</div>
-
-</div>
-</div>
-
-<!-- FOOTER -->
 <footer>
 <h3>Visitános</h3>
 <p>Concordia 525</p>
@@ -198,9 +204,28 @@ function updateCount(){
   document.getElementById("count").innerText = cart.length;
 }
 
+function selectColor(el, id){
+  let parent = document.getElementById(id);
+  parent.querySelectorAll('.color').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function changeQty(id, delta){
+  let el = document.getElementById(id);
+  let value = parseInt(el.innerText);
+
+  value += delta;
+  if(value < 1) value = 1;
+  if(value > 5) value = 5;
+
+  el.innerText = value;
+}
+
 function add(nombre, precio, cId, qId){
-  let color = document.getElementById(cId).value;
-  let cantidad = parseInt(document.getElementById(qId).value);
+  let cantidad = parseInt(document.getElementById(qId).innerText);
+
+  let colorEl = document.querySelector(`#${cId} .active`);
+  let color = colorEl ? colorEl.classList[1] : "negro";
 
   cart.push({nombre, precio, color, cantidad});
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -209,7 +234,6 @@ function add(nombre, precio, cId, qId){
   let t = document.getElementById("toast");
   t.innerHTML = `✔ ${nombre}<br>Color: ${color} | Cant: ${cantidad}`;
   t.classList.add("show");
-
   setTimeout(()=>{t.classList.remove("show");},1800);
 }
 
