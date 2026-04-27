@@ -17,13 +17,12 @@ html, body { margin:0; overflow-x:hidden; font-family:'Poppins',sans-serif; back
 header {
   position:absolute;
   width:100%;
-  max-width:100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:20px 40px;
   color:white;
-  z-index:2;
+  z-index:3;
 }
 
 /* NAV */
@@ -77,27 +76,38 @@ nav a {
   transform:translateY(0);
 }
 
-/* 🖤 BANNER ARREGLADO */
+/* 🖤 BANNER PRO */
 .banner {
   height:90vh;
   display:flex;
   align-items:center;
-  background: url('banner.jpg') right center no-repeat;
-  background-size:contain; /* 👈 NO SE CORTA */
-  background-color:#2b2b2b;
   position:relative;
+  overflow:hidden;
 }
 
+/* IMAGEN DIFUMINADA */
+.banner::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background: url('banner.jpg') right center no-repeat;
+  background-size:cover;
+  filter: brightness(0.6) blur(1px);
+  z-index:0;
+}
+
+/* DEGRADADO */
 .banner::before {
   content:"";
   position:absolute;
-  width:60%;
-  height:100%;
+  inset:0;
   background:linear-gradient(to right, rgba(0,0,0,0.85), transparent);
+  z-index:1;
 }
 
 .banner-text {
   position:relative;
+  z-index:2;
   color:white;
   padding-left:60px;
 }
@@ -109,9 +119,7 @@ nav a {
 }
 
 /* SECCIONES */
-.section {
-  padding:60px 20px;
-}
+.section { padding:60px 20px; }
 
 .section h2 {
   text-align:center;
@@ -252,18 +260,27 @@ function q(id,v){
 }
 
 function add(n,p,cid,qid){
-  let cantidad=parseInt(document.getElementById(qid).innerText);
-  let color=document.querySelector(`#${cid} .active`).classList[1];
+  let cantidad = parseInt(document.getElementById(qid).innerText);
+
+  let colorEl = document.querySelector(`#${cid} .active`);
+  let color = colorEl.classList.contains("negro") ? "Negro" :
+              colorEl.classList.contains("blanco") ? "Blanco" :
+              "Gris";
 
   cart.push({nombre:n,precio:p,color,cantidad});
   localStorage.setItem("cart",JSON.stringify(cart));
   update();
 
-  let notif=document.getElementById("notif");
-  notif.innerHTML=`✔ ${n}<br>${color} x${cantidad}`;
+  let notif = document.getElementById("notif");
+  notif.innerHTML = `
+    <strong>${n}</strong><br>
+    ${color} · x${cantidad}
+  `;
   notif.classList.add("show");
 
-  setTimeout(()=>notif.classList.remove("show"),2000);
+  setTimeout(()=>{
+    notif.classList.remove("show");
+  },2000);
 }
 
 function irCarrito(){
