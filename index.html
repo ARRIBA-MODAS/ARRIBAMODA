@@ -8,12 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-body {margin:0;font-family:'Poppins',sans-serif;background:#f5f5f5;}
+
+/* 🔥 FIX GLOBAL */
+* { box-sizing: border-box; }
+html, body { margin:0; overflow-x:hidden; font-family:'Poppins',sans-serif; background:#f5f5f5; }
 
 /* HEADER */
 header {
   position:absolute;
   width:100%;
+  max-width:100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -30,7 +34,7 @@ nav a {
   font-size:14px;
 }
 
-/* 🛒 ICONO SVG */
+/* 🛒 ICONO */
 .cart {
   position:relative;
   cursor:pointer;
@@ -42,7 +46,6 @@ nav a {
   stroke:white;
 }
 
-/* contador */
 .cart-count {
   position:absolute;
   top:-6px;
@@ -54,13 +57,12 @@ nav a {
   border-radius:50%;
 }
 
-/* 🔔 NOTIFICACIÓN */
+/* 🔔 NOTIF */
 #notif {
   position:absolute;
-  top:60px;
+  top:70px;
   right:40px;
   background:white;
-  color:black;
   padding:12px 16px;
   border-radius:12px;
   box-shadow:0 10px 30px rgba(0,0,0,0.1);
@@ -75,13 +77,14 @@ nav a {
   transform:translateY(0);
 }
 
-/* BANNER */
+/* 🖤 BANNER ARREGLADO */
 .banner {
   height:90vh;
   display:flex;
   align-items:center;
   background: url('banner.jpg') right center no-repeat;
-  background-size:cover;
+  background-size:contain; /* 👈 NO SE CORTA */
+  background-color:#2b2b2b;
   position:relative;
 }
 
@@ -101,21 +104,32 @@ nav a {
 
 .banner-text h1 {
   font-family:'Playfair Display', serif;
-  font-size:90px;
+  font-size:80px;
   line-height:0.9;
 }
 
-/* GRID */
-.section {padding:60px 20px;}
+/* SECCIONES */
+.section {
+  padding:60px 20px;
+}
 
+.section h2 {
+  text-align:center;
+  margin-bottom:40px;
+  font-weight:300;
+}
+
+/* GRID */
 .grid {
+  width:100%;
+  max-width:1100px;
+  margin:auto;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:30px;
-  max-width:1100px;
-  margin:auto;
 }
 
+/* CARD */
 .card {
   background:white;
   padding:15px;
@@ -138,6 +152,13 @@ nav a {
 /* BOTON */
 button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
 
+/* RESPONSIVE */
+@media(max-width:768px){
+  .grid {grid-template-columns:1fr;}
+  .banner-text h1 {font-size:50px;}
+  header {padding:20px;}
+}
+
 </style>
 </head>
 
@@ -151,22 +172,16 @@ button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
     <a href="#vendidos">Más vendidos</a>
   </nav>
 
-  <!-- 🛒 ICONO PRO -->
   <div class="cart" onclick="irCarrito()">
-
     <svg fill="none" stroke-width="2" viewBox="0 0 24 24">
       <path d="M6 6h15l-1.5 9h-13z"/>
       <circle cx="9" cy="20" r="1"/>
       <circle cx="18" cy="20" r="1"/>
     </svg>
-
     <div class="cart-count" id="count">0</div>
-
   </div>
 
-  <!-- NOTIFICACIÓN -->
   <div id="notif"></div>
-
 </header>
 
 <!-- BANNER -->
@@ -178,6 +193,8 @@ button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
 
 <!-- NOVEDADES -->
 <div class="section" id="novedades">
+<h2>NOVEDADES</h2>
+
 <div class="grid">
 
 <div class="card">
@@ -199,6 +216,17 @@ button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
 <button onclick="add('Remera Morley',12000,'c1','q1')">Agregar</button>
 </div>
 
+</div>
+</div>
+
+<!-- MÁS VENDIDOS -->
+<div class="section" id="vendidos">
+<h2>MÁS VENDIDOS</h2>
+
+<div class="grid">
+<div class="card"></div>
+<div class="card"></div>
+<div class="card"></div>
 </div>
 </div>
 
@@ -231,17 +259,11 @@ function add(n,p,cid,qid){
   localStorage.setItem("cart",JSON.stringify(cart));
   update();
 
-  /* 🔔 NOTIF */
-  let notif = document.getElementById("notif");
-  notif.innerHTML = `
-    ✔ ${n}<br>
-    ${color} | x${cantidad}
-  `;
+  let notif=document.getElementById("notif");
+  notif.innerHTML=`✔ ${n}<br>${color} x${cantidad}`;
   notif.classList.add("show");
 
-  setTimeout(()=>{
-    notif.classList.remove("show");
-  },2000);
+  setTimeout(()=>notif.classList.remove("show"),2000);
 }
 
 function irCarrito(){
