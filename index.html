@@ -43,7 +43,9 @@ nav a:hover{opacity:1}
 .soon .arch{background:var(--silk)}
 .card h3{font-family:var(--serif);font-weight:400;font-size:1.3rem;margin:0}
 .price{margin:4px 0 12px;color:var(--soft)}
-.colors{display:flex;justify-content:center;gap:12px;margin:12px 0}
+.colors{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:12px 0 6px}
+.cname{margin:0 0 12px;font-size:.9rem;color:var(--soft)}
+.arch img{object-position:50% 30%}
 .color{width:22px;height:22px;border-radius:50%;cursor:pointer;border:1px solid #cbbfd6;padding:0;outline-offset:3px}
 .negro{background:#1a1a1a}.blanco{background:#fff}.gris{background:#8a8590}
 .color.active{box-shadow:0 0 0 2px var(--mist),0 0 0 3.5px var(--ink)}
@@ -85,21 +87,27 @@ footer{padding:36px;text-align:center;color:var(--soft);font-size:.9rem}
   <h2>Novedades</h2>
   <div class="grid">
     <div class="card">
-      <div class="arch"><!-- <img src="foto-darlon.jpg" alt="Manga Globo Rayado Darlon"> --></div>
-      <h3>Manga Globo Rayado Darlon</h3>
-      <p class="price">$9.900</p>
-      <div class="colors" id="c1">
-        <button class="color negro active" aria-label="Negro" onclick="sel(this,'c1')"></button>
-        <button class="color blanco" aria-label="Blanco" onclick="sel(this,'c1')"></button>
-        <button class="color gris" aria-label="Gris" onclick="sel(this,'c1')"></button>
+      <div class="arch"><img src="remera-bote-lurex.webp" alt="Remera bote con lurex" loading="lazy"></div>
+      <h3>Remera bote con lurex</h3>
+      <p class="price">$9.000</p>
+      <div class="colors" id="c3">
+        <button class="color active" data-name="Chocolate" style="background:#4a2a1f" aria-label="Chocolate" onclick="sel(this,'c3')"></button>
+        <button class="color" data-name="Moca" style="background:#8a6a58" aria-label="Moca" onclick="sel(this,'c3')"></button>
+        <button class="color" data-name="Amarillo claro" style="background:#f3e3a8" aria-label="Amarillo claro" onclick="sel(this,'c3')"></button>
+        <button class="color" data-name="Celeste" style="background:#b6d3ea" aria-label="Celeste" onclick="sel(this,'c3')"></button>
+        <button class="color" data-name="Rosa" style="background:#f6c4b8" aria-label="Rosa" onclick="sel(this,'c3')"></button>
+        <button class="color" data-name="Crema" style="background:#f1e8d8" aria-label="Crema" onclick="sel(this,'c3')"></button>
       </div>
+      <p class="cname" id="c3n">Chocolate</p>
       <div class="qty">
-        <button onclick="q('q1',-1)" aria-label="Menos">-</button>
-        <span id="q1">1</span>
-        <button onclick="q('q1',1)" aria-label="Más">+</button>
+        <button onclick="q('q3',-1)" aria-label="Menos">-</button>
+        <span id="q3">1</span>
+        <button onclick="q('q3',1)" aria-label="Más">+</button>
       </div>
-      <button class="add" onclick="add('Manga Globo Rayado Darlon',9900,'c1','q1')">Agregar</button>
+      <button class="add" onclick="add('Remera bote con lurex',9000,'c3','q3')">Agregar</button>
     </div>
+    <div class="card soon"><div class="arch"></div><h3>Próximamente</h3></div>
+    <div class="card soon"><div class="arch"></div><h3>Próximamente</h3></div>
   </div>
 </div>
  
@@ -123,6 +131,7 @@ function update(){
 function sel(el,id){
   document.querySelectorAll(`#${id} .color`).forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
+  document.getElementById(id+"n").innerText=el.dataset.name;
 }
 function q(id,v){
   let e=document.getElementById(id);
@@ -131,7 +140,7 @@ function q(id,v){
 function add(n,p,cid,qid){
   let cantidad=parseInt(document.getElementById(qid).innerText);
   let c=document.querySelector(`#${cid} .active`);
-  let color=c.classList.contains("negro")?"Negro":c.classList.contains("blanco")?"Blanco":"Gris";
+  let color=c.dataset.name;
   let ex=cart.find(i=>i.nombre===n&&i.color===color);
   if(ex){ex.cantidad+=cantidad}else{cart.push({nombre:n,precio:p,color,cantidad})}
   localStorage.setItem("cart",JSON.stringify(cart));
