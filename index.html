@@ -4,296 +4,146 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ARRIBA MODA</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;1,400&family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-
-/* 🔥 FIX GLOBAL */
-* { box-sizing: border-box; }
-html, body { margin:0; overflow-x:hidden; font-family:'Poppins',sans-serif; background:#f5f5f5; }
-
-/* HEADER */
-header {
-  position:absolute;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 40px;
-  color:white;
-  z-index:3;
-}
-
-/* NAV */
-nav a {
-  margin:0 10px;
-  color:white;
-  text-decoration:none;
-  font-size:14px;
-}
-
-/* 🛒 ICONO */
-.cart {
-  position:relative;
-  cursor:pointer;
-}
-
-.cart svg {
-  width:24px;
-  height:24px;
-  stroke:white;
-}
-
-.cart-count {
-  position:absolute;
-  top:-6px;
-  right:-8px;
-  background:white;
-  color:black;
-  font-size:10px;
-  padding:2px 6px;
-  border-radius:50%;
-}
-
-/* 🔔 NOTIF (FIX COLOR NEGRO) */
-#notif {
-  position:absolute;
-  top:70px;
-  right:40px;
-  background:white;
-  color:black; /* 👈 FIX */
-  padding:12px 16px;
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-  font-size:13px;
-  opacity:0;
-  transform:translateY(-10px);
-  transition:0.3s;
-}
-
-#notif.show {
-  opacity:1;
-  transform:translateY(0);
-}
-
-#notif strong {
-  font-weight:500;
-  display:block;
-  margin-bottom:3px;
-}
-
-/* 🖤 BANNER PRO */
-.banner {
-  height:90vh;
-  display:flex;
-  align-items:center;
-  position:relative;
-  overflow:hidden;
-}
-
-.banner::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background: url('banner.jpg') right center no-repeat;
-  background-size:cover;
-  filter: brightness(0.6) blur(1px);
-  z-index:0;
-}
-
-.banner::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to right, rgba(0,0,0,0.85), transparent);
-  z-index:1;
-}
-
-.banner-text {
-  position:relative;
-  z-index:2;
-  color:white;
-  padding-left:60px;
-}
-
-.banner-text h1 {
-  font-family:'Playfair Display', serif;
-  font-size:80px;
-  line-height:0.9;
-}
-
-/* SECCIONES */
-.section { padding:60px 20px; }
-
-.section h2 {
-  text-align:center;
-  margin-bottom:40px;
-  font-weight:300;
-}
-
-/* GRID */
-.grid {
-  width:100%;
-  max-width:1100px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:30px;
-}
-
-/* CARD */
-.card {
-  background:white;
-  padding:15px;
-  border-radius:12px;
-  text-align:center;
-}
-
-/* COLORES */
-.colors {display:flex;justify-content:center;gap:10px;margin:10px 0;}
-.color {width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid transparent;}
-.negro{background:black;}
-.blanco{background:white;border:1px solid #ccc;}
-.gris{background:gray;}
-.active{border:2px solid black;}
-
-/* CANTIDAD */
-.qty {display:flex;justify-content:center;gap:10px;}
-.qty button {width:28px;height:28px;border:none;background:#eee;}
-
-/* BOTON */
-button {padding:10px;background:black;color:white;border:none;cursor:pointer;}
-
-/* RESPONSIVE */
+:root{--ink:#2a1233;--mist:#ece8f1;--silk:#f8f6fa;--orchid:#b9a3d6;--gold:#9c7f43;--soft:#5d4a68;
+--serif:"Bodoni Moda","Didot",serif;--sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;overflow-x:hidden;font-family:var(--sans);font-weight:300;background:var(--mist);color:var(--ink);line-height:1.6}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+button{font-family:var(--sans)}
+ 
+header{position:absolute;inset:0 0 auto 0;display:flex;justify-content:space-between;align-items:center;padding:24px clamp(20px,5vw,56px);color:var(--silk);z-index:3}
+.logo{font-family:var(--serif);letter-spacing:.3em;font-size:1.1rem}
+nav a{margin:0 12px;color:var(--silk);text-decoration:none;font-size:.95rem;opacity:.85}
+nav a:hover{opacity:1}
+.cart{position:relative;cursor:pointer;background:none;border:0;padding:4px;color:inherit}
+.cart svg{width:24px;height:24px;stroke:var(--silk)}
+.cart-count{position:absolute;top:-6px;right:-8px;background:var(--orchid);color:var(--ink);font-size:11px;min-width:18px;padding:1px 5px;border-radius:999px;text-align:center}
+#notif{position:absolute;top:76px;right:clamp(20px,5vw,56px);background:var(--silk);color:var(--ink);padding:12px 18px;border-radius:14px;box-shadow:0 12px 30px rgba(42,18,51,.25);font-size:.9rem;opacity:0;transform:translateY(-10px);transition:.3s;pointer-events:none}
+#notif.show{opacity:1;transform:none}
+#notif strong{display:block;font-weight:500}
+ 
+.banner{min-height:92vh;display:flex;align-items:center;position:relative;overflow:hidden;background:#2a1233}
+.banner::after{content:"";position:absolute;inset:0;background:url('banner.jpg') right center/cover no-repeat;opacity:.75}
+.banner::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(42,18,51,.95) 15%,rgba(42,18,51,.25))}
+.banner-text{position:relative;z-index:2;color:var(--silk);padding:0 clamp(20px,6vw,80px)}
+.banner-text h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,10vw,7rem);line-height:.95;margin:0;letter-spacing:-.01em}
+.banner-text h1 span{display:block}
+.banner-text h1 span:nth-child(2){margin-left:.5em}
+.banner-text h1 span:nth-child(3){margin-left:1em}
+.banner-text p{margin:28px 0 0;font-family:var(--serif);font-style:italic;font-size:1.3rem;opacity:.85}
+ 
+.section{padding:clamp(56px,8vw,100px) clamp(20px,5vw,56px)}
+.section h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.5vw,3rem);text-align:center;margin:0 0 clamp(32px,5vw,56px)}
+.grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,36px)}
+.card{text-align:center}
+.arch{aspect-ratio:3/4;border-radius:999px 999px 6px 6px;background:linear-gradient(170deg,#d9cdea,#b9a3d6);overflow:hidden;margin-bottom:18px}
+.arch img{width:100%;height:100%;object-fit:cover;display:block}
+.soon .arch{background:var(--silk)}
+.card h3{font-family:var(--serif);font-weight:400;font-size:1.3rem;margin:0}
+.price{margin:4px 0 12px;color:var(--soft)}
+.colors{display:flex;justify-content:center;gap:12px;margin:12px 0}
+.color{width:22px;height:22px;border-radius:50%;cursor:pointer;border:1px solid #cbbfd6;padding:0;outline-offset:3px}
+.negro{background:#1a1a1a}.blanco{background:#fff}.gris{background:#8a8590}
+.color.active{box-shadow:0 0 0 2px var(--mist),0 0 0 3.5px var(--ink)}
+.qty{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:14px}
+.qty button{width:32px;height:32px;border:1px solid var(--ink);background:none;color:var(--ink);border-radius:50%;cursor:pointer}
+.add{padding:13px 32px;background:var(--ink);color:var(--silk);border:0;border-radius:999px;cursor:pointer;letter-spacing:.04em;transition:background .25s}
+.add:hover{background:var(--gold)}
+footer{padding:36px;text-align:center;color:var(--soft);font-size:.9rem}
+ 
 @media(max-width:768px){
-  .grid {grid-template-columns:1fr;}
-  .banner-text h1 {font-size:50px;}
-  header {padding:20px;}
+  .grid{grid-template-columns:1fr;max-width:340px}
+  nav a{margin:0 6px;font-size:.85rem}
 }
-
 </style>
 </head>
-
 <body>
-
+ 
 <header>
-  <div>ARRIBA MODA</div>
-
+  <div class="logo">ARRIBA</div>
   <nav>
     <a href="#novedades">Novedades</a>
     <a href="#vendidos">Más vendidos</a>
   </nav>
-
-  <div class="cart" onclick="irCarrito()">
-    <svg fill="none" stroke-width="2" viewBox="0 0 24 24">
-      <path d="M6 6h15l-1.5 9h-13z"/>
-      <circle cx="9" cy="20" r="1"/>
-      <circle cx="18" cy="20" r="1"/>
-    </svg>
-    <div class="cart-count" id="count">0</div>
-  </div>
-
-  <div id="notif"></div>
+  <button class="cart" onclick="irCarrito()" aria-label="Ver carrito">
+    <svg fill="none" stroke-width="1.6" viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-13z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+    <span class="cart-count" id="count">0</span>
+  </button>
+  <div id="notif" role="status"></div>
 </header>
-
-<!-- BANNER -->
+ 
 <div class="banner">
   <div class="banner-text">
-    <h1>OWN<br>YOUR<br>STYLE</h1>
+    <h1><span>OWN</span><span>YOUR</span><span>STYLE</span></h1>
+    <p>Prendas pensadas para elevarte.</p>
   </div>
 </div>
-
-<!-- NOVEDADES -->
+ 
 <div class="section" id="novedades">
-<h2>NOVEDADES</h2>
-
-<div class="grid">
-
-<div class="card">
-<h3>Manga Globo Rayado Darlon</h3>
-<p>$9.900</p>
-
-<div class="colors" id="c1">
-<div class="color negro active" onclick="sel(this,'c1')"></div>
-<div class="color blanco" onclick="sel(this,'c1')"></div>
-<div class="color gris" onclick="sel(this,'c1')"></div>
+  <h2>Novedades</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="arch"><!-- <img src="foto-darlon.jpg" alt="Manga Globo Rayado Darlon"> --></div>
+      <h3>Manga Globo Rayado Darlon</h3>
+      <p class="price">$9.900</p>
+      <div class="colors" id="c1">
+        <button class="color negro active" aria-label="Negro" onclick="sel(this,'c1')"></button>
+        <button class="color blanco" aria-label="Blanco" onclick="sel(this,'c1')"></button>
+        <button class="color gris" aria-label="Gris" onclick="sel(this,'c1')"></button>
+      </div>
+      <div class="qty">
+        <button onclick="q('q1',-1)" aria-label="Menos">-</button>
+        <span id="q1">1</span>
+        <button onclick="q('q1',1)" aria-label="Más">+</button>
+      </div>
+      <button class="add" onclick="add('Manga Globo Rayado Darlon',9900,'c1','q1')">Agregar</button>
+    </div>
+  </div>
 </div>
-
-<div class="qty">
-<button onclick="q('q1',-1)">-</button>
-<span id="q1">1</span>
-<button onclick="q('q1',1)">+</button>
-</div>
-
-<button onclick="add('Manga Globo Rayado Darlon',9.900,'c1','q1')">Agregar</button>
-</div>
-
-</div>
-</div>
-
-<!-- MÁS VENDIDOS -->
+ 
 <div class="section" id="vendidos">
-<h2>MÁS VENDIDOS</h2>
-
-<div class="grid">
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
+  <h2>Más vendidos</h2>
+  <div class="grid">
+    <div class="card soon"><div class="arch"></div><h3>Próximamente</h3></div>
+    <div class="card soon"><div class="arch"></div><h3>Próximamente</h3></div>
+    <div class="card soon"><div class="arch"></div><h3>Próximamente</h3></div>
+  </div>
 </div>
-</div>
-
+ 
+<footer>© 2026 ARRIBA MODA</footer>
+ 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+ 
 function update(){
-  document.getElementById("count").innerText = cart.length;
+  document.getElementById("count").innerText = cart.reduce((s,i)=>s+i.cantidad,0);
 }
-
 function sel(el,id){
   document.querySelectorAll(`#${id} .color`).forEach(c=>c.classList.remove("active"));
   el.classList.add("active");
 }
-
 function q(id,v){
   let e=document.getElementById(id);
-  let n=parseInt(e.innerText);
-  n+=v;
-  if(n<1)n=1;
-  if(n>5)n=5;
-  e.innerText=n;
+  e.innerText=Math.min(5,Math.max(1,parseInt(e.innerText)+v));
 }
-
 function add(n,p,cid,qid){
-  let cantidad = parseInt(document.getElementById(qid).innerText);
-
-  let colorEl = document.querySelector(`#${cid} .active`);
-  let color = colorEl.classList.contains("negro") ? "Negro" :
-              colorEl.classList.contains("blanco") ? "Blanco" :
-              "Gris";
-
-  cart.push({nombre:n,precio:p,color,cantidad});
+  let cantidad=parseInt(document.getElementById(qid).innerText);
+  let c=document.querySelector(`#${cid} .active`);
+  let color=c.classList.contains("negro")?"Negro":c.classList.contains("blanco")?"Blanco":"Gris";
+  let ex=cart.find(i=>i.nombre===n&&i.color===color);
+  if(ex){ex.cantidad+=cantidad}else{cart.push({nombre:n,precio:p,color,cantidad})}
   localStorage.setItem("cart",JSON.stringify(cart));
   update();
-
-  let notif = document.getElementById("notif");
-  notif.innerHTML = `
-    <strong>${n}</strong>
-    ${color} · x${cantidad}
-  `;
+  let notif=document.getElementById("notif");
+  notif.innerHTML=`<strong>${n}</strong>${color} · x${cantidad}`;
   notif.classList.add("show");
-
-  setTimeout(()=>{
-    notif.classList.remove("show");
-  },2000);
+  setTimeout(()=>notif.classList.remove("show"),2000);
 }
-
-function irCarrito(){
-  window.location.href="carrito.html";
-}
-
+function irCarrito(){window.location.href="carrito.html"}
 update();
 </script>
-
 </body>
 </html>
+ 
