@@ -2,209 +2,98 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Carrito</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrito · ARRIBA MODA</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500&family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; }
-
-body {
-  font-family:'Poppins', sans-serif;
-  margin:0;
-  background:#f5f5f5;
-}
-
-/* HEADER */
-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 40px;
-  background:white;
-  border-bottom:1px solid #eee;
-}
-
-a {
-  text-decoration:none;
-  color:black;
-}
-
-/* CONTENEDOR */
-.container {
-  max-width:800px;
-  margin:auto;
-  padding:20px;
-}
-
-/* ITEM */
-.item {
-  background:white;
-  padding:15px;
-  margin-bottom:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-radius:10px;
-}
-
-/* ELIMINAR */
-.remove {
-  background:black;
-  color:white;
-  border:none;
-  padding:5px 10px;
-  cursor:pointer;
-}
-
-/* TOTAL */
-.total {
-  font-size:20px;
-  margin:20px 0;
-}
-
-/* AVISOS */
-.alert {
-  background:white;
-  border-left:4px solid black;
-  padding:12px 15px;
-  margin:15px 0;
-  font-size:14px;
-}
-
-/* BOTON */
-.btn {
-  display:block;
-  width:100%;
-  padding:15px;
-  background:black;
-  color:white;
-  text-align:center;
-  border:none;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-.btn:disabled {
-  background:#aaa;
-  cursor:not-allowed;
-}
-
-.empty {
-  text-align:center;
-  margin-top:40px;
-  color:#777;
-}
+:root{--ink:#2a1233;--mist:#ece8f1;--silk:#f8f6fa;--orchid:#b9a3d6;--gold:#9c7f43;--soft:#5d4a68;
+--serif:"Bodoni Moda","Didot",serif;--sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--sans);font-weight:300;background:var(--mist);color:var(--ink);line-height:1.6}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+a{color:inherit;text-decoration:none}
+header{display:flex;justify-content:space-between;align-items:center;padding:24px clamp(20px,5vw,56px)}
+.logo{font-family:var(--serif);letter-spacing:.3em}
+.container{max-width:720px;margin:auto;padding:0 20px 60px}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,5vw,2.8rem);margin:12px 0 20px}
+.alert{border-left:3px solid var(--gold);background:var(--silk);padding:12px 16px;margin:10px 0;font-size:.95rem}
+#lista{margin-top:20px}
+.item{background:var(--silk);padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:16px;border-radius:14px}
+.item b{font-family:var(--serif);font-weight:500;font-size:1.1rem}
+.item small{color:var(--soft);display:block}
+.remove{background:none;border:1px solid var(--ink);color:var(--ink);width:32px;height:32px;border-radius:50%;cursor:pointer}
+.total{font-family:var(--serif);font-size:1.6rem;margin:24px 0 6px}
+#envio{color:var(--soft);font-size:.95rem;margin:0 0 20px}
+.btn{display:block;width:100%;padding:16px;background:var(--ink);color:var(--silk);text-align:center;border:0;border-radius:999px;cursor:pointer;margin-top:12px;font:400 1rem var(--sans);letter-spacing:.04em;transition:background .25s}
+.btn:hover:not(:disabled){background:var(--gold)}
+.btn:disabled{background:#b5abbd;cursor:not-allowed}
+.btn.alt{background:none;color:var(--ink);border:1px solid var(--ink)}
+.btn.alt:hover{background:var(--ink)!important;color:var(--silk)}
+.empty{text-align:center;margin:40px 0;color:var(--soft)}
 </style>
 </head>
-
 <body>
-
+ 
 <header>
   <a href="index.html">← Inicio</a>
-  <div>Tu carrito</div>
+  <div class="logo">ARRIBA</div>
 </header>
-
+ 
 <div class="container">
-
-<h2>Tu carrito</h2>
-
-<!-- ⚠️ AVISOS -->
-<div class="alert">
-Compra mínima: 3 unidades
+  <h2>Tu carrito</h2>
+  <div class="alert">Compra mínima: 3 unidades</div>
+  <div class="alert">Compra mínima para envíos: $40.000</div>
+ 
+  <div id="lista"></div>
+ 
+  <div class="total">Total: $<span id="total">0</span></div>
+  <p id="envio"></p>
+ 
+  <button class="btn" id="comprarBtn" onclick="enviar()">Finalizar por WhatsApp</button>
+  <a class="btn alt" href="index.html">Seguir comprando</a>
 </div>
-
-<div class="alert">
-Compra mínima para envíos: $40.000
-</div>
-
-<div id="lista"></div>
-
-<div class="total">
-Total: $<span id="total">0</span>
-</div>
-
-<button class="btn" id="comprarBtn" onclick="enviar()">Finalizar por WhatsApp</button>
-
-<a class="btn" href="index.html">Seguir comprando</a>
-
-</div>
-
+ 
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+const fmt = n => n.toLocaleString("es-AR");
+ 
 function render(){
-  let total = 0;
-  let unidades = 0;
-  let lista = document.getElementById("lista");
-
-  lista.innerHTML = "";
-
-  if(cart.length === 0){
-    lista.innerHTML = "<div class='empty'>Tu carrito está vacío</div>";
-  }
-
+  let total=0, unidades=0;
+  let lista=document.getElementById("lista");
+  lista.innerHTML = cart.length ? "" : "<div class='empty'>Tu carrito está vacío</div>";
+ 
   cart.forEach((item,i)=>{
-    total += item.precio * item.cantidad;
+    total += item.precio*item.cantidad;
     unidades += item.cantidad;
-
     lista.innerHTML += `
     <div class="item">
-      <div>
-        ${item.nombre}<br>
-        Color: ${item.color}<br>
-        Cant: ${item.cantidad}
-      </div>
-
-      <div>$${item.precio * item.cantidad}</div>
-
-      <button class="remove" onclick="del(${i})">X</button>
-    </div>
-    `;
+      <div><b>${item.nombre}</b><small>Color: ${item.color} · Cant: ${item.cantidad}</small></div>
+      <div>$${fmt(item.precio*item.cantidad)}</div>
+      <button class="remove" onclick="del(${i})" aria-label="Eliminar">×</button>
+    </div>`;
   });
-
-  document.getElementById("total").innerText = total;
-
-  /* 🔒 BLOQUEO BOTON */
-  let btn = document.getElementById("comprarBtn");
-  btn.disabled = unidades < 3;
-
-  localStorage.setItem("cart", JSON.stringify(cart));
+ 
+  document.getElementById("total").innerText = fmt(total);
+  document.getElementById("envio").innerText = total===0 ? "" :
+    total>=40000 ? "Tu pedido califica para envío." : `Te faltan $${fmt(40000-total)} para el envío.`;
+  document.getElementById("comprarBtn").disabled = unidades<3;
+  localStorage.setItem("cart",JSON.stringify(cart));
 }
-
-function del(i){
-  cart.splice(i,1);
-  render();
-}
-
+ 
+function del(i){cart.splice(i,1);render()}
+ 
 function enviar(){
-  let total = 0;
-  let unidades = 0;
-
-  cart.forEach(item=>{
-    total += item.precio * item.cantidad;
-    unidades += item.cantidad;
-  });
-
-  /* 🚫 BLOQUEO REAL */
-  if(unidades < 3){
-    alert("Debés comprar mínimo 3 unidades");
-    return;
-  }
-
-  let mensaje="Pedido:%0A";
-
-  cart.forEach(item=>{
-    mensaje+=`${item.nombre} (${item.color}) x${item.cantidad}%0A`;
-  });
-
-  mensaje+=`%0ATotal: $${total}`;
-
-  window.open(`https://wa.me/549XXXXXXXXXX?text=${mensaje}`);
+  let total=0, unidades=0;
+  cart.forEach(i=>{total+=i.precio*i.cantidad;unidades+=i.cantidad});
+  if(unidades<3){alert("Debés comprar mínimo 3 unidades");return}
+ 
+  let mensaje="Pedido:\n";
+  cart.forEach(i=>{mensaje+=`${i.nombre} (${i.color}) x${i.cantidad}\n`});
+  mensaje+=`\nTotal: $${fmt(total)}`;
+  window.open(`https://wa.me/549XXXXXXXXXX?text=${encodeURIComponent(mensaje)}`);
 }
-
 render();
 </script>
-
 </body>
 </html>
+ 
