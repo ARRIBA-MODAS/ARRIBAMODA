@@ -24,15 +24,15 @@ nav a:hover{opacity:1}
 #notif.show{opacity:1;transform:none}
 #notif strong{display:block;font-weight:500}
  
-.banner{min-height:92vh;display:flex;align-items:center;position:relative;overflow:hidden;background:#2a1233}
-.banner::after{content:"";position:absolute;inset:0;background:url('banner.jpg') right center/cover no-repeat;opacity:.75}
-.banner::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(42,18,51,.95) 15%,rgba(42,18,51,.25))}
-.banner-text{position:relative;z-index:2;color:var(--silk);padding:0 clamp(20px,6vw,80px)}
-.banner-text h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,10vw,7rem);line-height:.95;margin:0;letter-spacing:-.01em}
+.banner{min-height:clamp(340px,50vh,480px);display:flex;align-items:center;position:relative;overflow:hidden;background:#2a1233}
+.banner::after{content:"";position:absolute;inset:0;background:url('banner.jpg') right center/cover no-repeat,url('banner.svg') right center/cover no-repeat}
+.banner::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(42,18,51,.9) 10%,rgba(42,18,51,.1) 70%)}
+.banner-text{position:relative;z-index:2;color:var(--silk);padding:72px clamp(20px,6vw,80px) 0}
+.banner-text h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,7vw,4.8rem);line-height:.95;margin:0;letter-spacing:-.01em}
 .banner-text h1 span{display:block}
 .banner-text h1 span:nth-child(2){margin-left:.5em}
 .banner-text h1 span:nth-child(3){margin-left:1em}
-.banner-text p{margin:28px 0 0;font-family:var(--serif);font-style:italic;font-size:1.3rem;opacity:.85}
+.banner-text p{margin:16px 0 0;font-family:var(--serif);font-style:italic;font-size:1.15rem;opacity:.85}
  
 .section{padding:clamp(56px,8vw,100px) clamp(20px,5vw,56px)}
 .section h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.5vw,3rem);text-align:center;margin:0 0 clamp(32px,5vw,56px)}
